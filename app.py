@@ -1,21 +1,27 @@
 from flask import Flask, render_template, request, jsonify
 
 class Area:
-    def __init__(self,x,y,width,heigth,jenis,color,floor,gedung):
+    def __init__(self,x,y,width,heigth,nama,jenis,floor,gedung):
         self.x = x
         self.y = y
         self.w = width
         self.h = heigth
+        self.nama = nama
         self.jenis = jenis
-        self.color = color
         self.floor = floor
         self.gedung = gedung
 
 areas = [
-    Area(20,30,10,30,'jalan','red',4,'P'),
-    Area(40,30,10,30,'jalan','blue',4,'P'),
-    Area(50,30,10,30,'galon','yellow',4,'P'),
-    Area(50,30,10,30,'Gedung P','yellow',4,'P'),
+    # gedung P lt 1 (1637px x 543px)
+    #    x  y  w  h        nama jenis(ruangan galon pintu jalan)    floor  gedung
+    Area(0,0,24.5,43.46,'KANTIN','ruangan',4,'P1'),
+    Area(24.5,0,7.15,21.36,'ATK','ruangan',4,'P1'),
+
+    # gedung P lt 2 (1637px x 543px)
+    #    x  y  w  h        nama jenis(ruangan galon pintu jalan)    floor  gedung
+    Area(0,0,9.47,36.46,'P.204','ruangan',4,'P2'),
+    Area(9.47,0,13.32,36.46,'LAB SI','ruangan',4,'P2'),
+    
 ]
 # Posisi player
 x = None
@@ -30,6 +36,10 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html',dataAreas=areas)
+
+@app.route('/p2')
+def p2() :
+    return ''
 
 @app.route('/send_position', methods=['POST'])
 def receive_position():

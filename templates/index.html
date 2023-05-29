@@ -9,9 +9,24 @@
 <!-- ngisi bagian body -->
 {% block body %}
     {% for area in dataAreas %}
-    <div class="area" style="width:{{ area.w }}px; height:{{ area.h }}px; left:{{ area.x }}px; top:{{ area.y }}px; background-color:{{ area.color }}">
-        <h2>{{ area.jenis }}</h2>
-    </div>
+    {% if area.gedung ==  'P1' %}
+    {% if area.jenis == 'ruangan' %}
+        <div class="area" style="width:{{ area.w }}%; height:{{ area.h }}%; left:{{ area.x }}%; top:{{ area.y }}%; background-color:gray;border:black solid 1px;">
+            <h2 style="text-align:center;">{{ area.nama }}</h2>
+        </div>
+    {% elif area.jenis == 'galon' %}
+        <div class="area" style="width:{{ area.w }}%; height:{{ area.h }}%; left:{{ area.x }}%; top:{{ area.y }}%; background-color:blue;border:blue solid 1px;">
+            <h2 style="text-align:center;">{{ area.nama }}</h2>
+        </div>
+    {% elif area.jenis == 'jalan' %}
+        <div class="area" style="width:{{ area.w }}%; height:{{ area.h }}%; left:{{ area.x }}%; top:{{ area.y }}%; background-color:antiquewhite;">
+        </div>
+    {% elif area.jenis == 'pintu' %}
+        <div class="area" style="width:{{ area.w }}%; height:{{ area.h }}%; left:{{ area.x }}%; top:{{ area.y }}%; background-color:crimson;">
+            <h2 style="text-align:center;">{{ area.nama }}</h2>
+        </div>
+    {% endif %}
+    {% endif %}
     {% endfor %}
     
 {% endblock %}

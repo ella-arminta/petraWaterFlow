@@ -8,7 +8,22 @@ body{
     flex-direction: column;
     align-items: center;
 }
-.container{
+.header{
+    display: flex;
+    width: 90%;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+.btn{
+    margin: 0;
+}
+nav, nav ul, nav ul li{
+    text-decoration: none;
+    list-style: none;
+    display: inline;
+}
+.mycontainer{
     width: 90%;
     height: 90vh;
     background-color: white;
@@ -17,6 +32,12 @@ body{
 }
 .area{
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+h2{
+    font-size: 13px;
 }
 #orang{
     width: 60px;
