@@ -69,7 +69,7 @@ def get_neighbors(position):
 
 # Example usage:
 start_position = (0, 0)
-goal_position = (3, 5)
+goal_position = (2, 1)
 path = a_star(start_position, goal_position)
 
 if path:
