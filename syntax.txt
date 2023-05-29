@@ -1,0 +1,12 @@
+buat import block di base.html (ini kyk outer e  ngeimport head)
+{% block head %} {%endblock%}
+{% block body %} {%endblock%}
+
+di index.html 
+{% extends 'base.html' %} (ini kyk jadiin outer e)
+{% block head %} 
+<h1>Template</h1>
+{%endblock%}
+{% block body %}
+
+{%endblock%}
