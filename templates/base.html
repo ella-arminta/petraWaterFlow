@@ -9,8 +9,70 @@
 </head>
 <body>
     <!-- Navbar lantai -->
+    <div style="display:flex;gap:40px;">
+        <div id="xNow">X : </div>
+        <div id="yNow">Y : </div>
+    </div>
     <div class="container">
+        <div id="orang">
+            <img src="{{ url_for('static', filename='assets/orang.png') }}" style="width:100%;object-fit:contain;" alt="">
+        </div>
         {% block body %}{% endblock %}
     </div>
+    <button type="button" onclick="getPosition()">Find Fastest Route</button>
+
+    <script>
+        var container = document.querySelector(".container");
+        var orangDiv = document.getElementById("orang");
+
+        container.addEventListener("click", placeOrangDiv);
+
+        function placeOrangDiv(event) {
+            var rect = container.getBoundingClientRect();
+            var x = event.clientX - rect.left;
+            var y = event.clientY - rect.top;
+            document.getElementById('xNow').innerHTML = 'X : ' + event.clientX;
+            document.getElementById('yNow').innerHTML = 'Y : ' + event.clientY;
+
+            if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+                return; // Clicked outside of div#myDiv, ignore
+            }else{     
+                orangDiv.style.display = "block";
+                orangDiv.style.left = x-35 + "px";
+                orangDiv.style.top = y-35 + "px";
+            }
+            
+        }
+        function getPosition() {
+            var orangDiv = document.getElementById("orang");
+            var rect = orangDiv.getBoundingClientRect();
+            var x = rect.left;
+            var y = rect.top;
+
+            var data = {
+                x: x,
+                y: y
+            };
+
+            // Send the data to the Flask server
+            fetch('/send_position', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the server if needed
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle any errors that occur during the request
+                console.error('Error:', error);
+            });
+            }
+    </script>
+    {% block script %} {% endblock %}
 </body>
 </html>
