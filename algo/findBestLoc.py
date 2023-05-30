@@ -48,13 +48,13 @@ class User :
 #         self.kondisi = newKondisi
     
 findBestRoute = Algo()
-# usr = User(0)
+usr = User(0)
 
-loc1 = Location("1", 80, 25)
-loc2 = Location("2", 30,30)
-loc3 = Location("3", 100,50)
-loc4 = Location("4", 70, 30)
-loc5 = Location("5", 75, 10)
+loc1 = Location("1", 80, 25, usr)
+loc2 = Location("2", 30,30, usr)
+loc3 = Location("3", 100,50, usr)
+loc4 = Location("4", 70, 30, usr)
+loc5 = Location("5", 75, 10, usr)
 print(loc1.calculate_utility())
 print(loc2.calculate_utility())
 print(loc3.calculate_utility())
