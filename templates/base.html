@@ -4,13 +4,90 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+    <!-- custom css -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     {% block head %}{% endblock %}
 </head>
 <body>
     <!-- Navbar lantai -->
-    <div class="container">
+    <div class="header">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}"><button class="btn {% if request.path == url_for('index') %}btn-primary{% else %}btn-secondary{% endif %}" >P lt. 1</button></a></li>
+                <li><a href="{{ url_for('p2') }}"><button class="btn {% if request.path == url_for('p2') %}btn-primary{% else %}btn-secondary{% endif %}">P lt. 2</button></a></li>
+            </ul>
+        </nav>
+        <div style="display:flex;gap:40px;">
+            <div id="xNow">X : </div>
+            <div id="yNow">Y : </div>
+        </div>
+    </div>
+    
+    <div class="mycontainer">
+        <div id="orang">
+            <img src="{{ url_for('static', filename='assets/orang.png') }}" style="width:100%;object-fit:contain;" alt="">
+        </div>
         {% block body %}{% endblock %}
     </div>
+    <button type="button" onclick="getPosition()">Find Fastest Route</button>
+
+    <script>
+        var container = document.querySelector(".mycontainer");
+        var orangDiv = document.getElementById("orang");
+
+        container.addEventListener("click", placeOrangDiv);
+
+        function placeOrangDiv(event) {
+            var rect = container.getBoundingClientRect();
+            var x = event.clientX - rect.left;
+            var y = event.clientY - rect.top;
+            document.getElementById('xNow').innerHTML = 'X : ' + event.clientX;
+            document.getElementById('yNow').innerHTML = 'Y : ' + event.clientY;
+
+            if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+                return; // Clicked outside of div#myDiv, ignore
+            }else{     
+                orangDiv.style.display = "block";
+                orangDiv.style.left = x-35 + "px";
+                orangDiv.style.top = y-35 + "px";
+            }
+            
+        }
+        function getPosition() {
+            var orangDiv = document.getElementById("orang");
+            var rect = orangDiv.getBoundingClientRect();
+            var x = rect.left;
+            var y = rect.top;
+
+            var data = {
+                x: x,
+                y: y
+            };
+
+            // Send the data to the Flask server
+            fetch('/send_position', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the server if needed
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle any errors that occur during the request
+                console.error('Error:', error);
+            });
+            }
+    </script>
+    {% block script %} {% endblock %}
 </body>
 </html>
