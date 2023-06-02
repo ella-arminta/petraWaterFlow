@@ -39,32 +39,45 @@
     <script>
         var container = document.querySelector(".mycontainer");
         var orangDiv = document.getElementById("orang");
-
+        var xOrang;
+        var yOrang;
         container.addEventListener("click", placeOrangDiv);
 
         function placeOrangDiv(event) {
             var rect = container.getBoundingClientRect();
-            var x = event.clientX - rect.left;
-            var y = event.clientY - rect.top;
-            document.getElementById('xNow').innerHTML = 'X : ' + event.clientX;
-            document.getElementById('yNow').innerHTML = 'Y : ' + event.clientY;
+            xOrang = event.clientX - rect.left;
+            yOrang = event.clientY - rect.top;
 
-            if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+            if (xOrang < 0 || yOrang < 0 || xOrang > rect.width || yOrang > rect.height) {
+                if (xOrang < 0){
+                    xOrang = 0
+                }
+                if(yOrang <0){
+                    yOrang = 0
+                }
                 return; // Clicked outside of div#myDiv, ignore
             }else{     
                 orangDiv.style.display = "block";
-                orangDiv.style.left = x-35 + "px";
-                orangDiv.style.top = y-35 + "px";
+                orangDiv.style.left = xOrang-35 + "px";
+                orangDiv.style.top = yOrang-35 + "px";
             }
+            hContainer = container.offsetHeight;
+            wContainer = container.offsetWidth;
+            yOrang = yOrang / hContainer * 100
+            xOrang = xOrang / wContainer * 100
+            document.getElementById('xNow').innerHTML = 'X : ' + xOrang;
+            document.getElementById('yNow').innerHTML = 'Y : ' + yOrang;
             
         }
+        
         function getPosition() {
-            var orangDiv = document.getElementById("orang");
-            var rect = orangDiv.getBoundingClientRect();
-            var x = rect.left;
-            var y = rect.top;
+            var x = xOrang;
+            var y = yOrang;
+
+            var lantai = '{{ lantai }}';
 
             var data = {
+                lantai : lantai,
                 x: x,
                 y: y
             };

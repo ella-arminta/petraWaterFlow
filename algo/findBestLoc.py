@@ -1,17 +1,23 @@
+# MENCARI TARGET GALON
+# lokasi galon
 class Location:
     def __init__(self, name, kondisi, koordinat, User):
-        self.name = name
-        self.kondisi = kondisi
-        self.start = User.lokasi
-        self.koordinat = koordinat
+        self.name = name #nama
+        self.kondisi = kondisi #kondisi galon dalam persentase misal 80 = 80 persen
+        self.start = User.lokasi #lokasi user sekarang
+        self.koordinat = koordinat #koordinat galon
         self.utility =self.calculate_utility()
 
     def calculate_distance(self, start, end):
-        return self.koordinat-self.start *2 * 0.5
+        # end = koordinat galon
+        # self.start = lokasi user sekarang
+
+        # dikali 2 dikali 0.5 ini apa yo bukan e tetep bakal jadi self.start * 1
+        return self.koordinat - self.start *2 * 0.5
 
     def calculate_utility(self):
-        distance_utility = 1 / (self.calculate_distance(self.start, self.koordinat) + 1)
-        water_quality_utility = self.kondisi / 100
+        distance_utility = 1 / (self.calculate_distance(self.start, self.koordinat) + 1) #dalam satuan peluang 1/...
+        water_quality_utility = self.kondisi / 100 #dlm satuan persentase
         return distance_utility + water_quality_utility
 
 
