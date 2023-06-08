@@ -10,6 +10,7 @@ class Location:
         self.x = x
         self.y = y
         self.utility = self.calculate_util()
+        self.distance = self.calculate_distance()
 
     def calculate_distance(self):
         return math.sqrt(pow((self.x - self.start_x),2) + pow((self.y - self.start_y),2))
@@ -32,13 +33,11 @@ class Algo:
         best = None
 
         for locs in self.locs:
-            if locs.utility > highest:
-                if locs.x == locs.start_x or locs.y == locs.start_y:
-                    highest = locs.utility
-
-                highest = locs.utility
-                best = locs.name
-
+            if locs.distance > highest:
+                highest = locs.distance
+               
+        
+            
         return best     
     
 class User :
@@ -53,7 +52,7 @@ loc1 = Location("1", 70, 100, 35)
 loc2 = Location("2", 80, 5, 20)
 loc3 = Location("3", 20, 50, 30)
 loc4 = Location("4", 70, 40, 20)
-loc5 = Location("5", 75, 5, 40)
+loc5 = Location("5", 75, 5, 70)
 
 print(loc1.calculate_distance())
 print(loc2.calculate_distance())
