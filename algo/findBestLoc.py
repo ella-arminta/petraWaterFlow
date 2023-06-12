@@ -29,16 +29,34 @@ class Algo:
         self.locs.append(location)
 
     def choose_loc(self):
-        highest = float("-inf")
-        best = None
+        # highest = float("-inf")
+        # best = None
 
-        for locs in self.locs:
-            if locs.distance > highest:
-                highest = locs.distance
-               
-        
+        # for locs in self.locs:
+        #     if locs.utility > highest:
+        #         highest = locs
             
-        return best     
+        # return highest.name    
+        # 
+        return sorted(self.locs, key=lambda x: (x["dist"])) 
+    
+    # def calculateUtil(self):
+    #     normalizedDistance = []
+    #     normalizedGalon = []
+    #     utility = []
+
+    #     for locs in self.locs:
+    #        normalizedDistance.append(self.get_highest*locs.distance) 
+    #        normalizedGalon.append(100*locs.galon)
+
+    #     for norm in normalizedDistance:
+    #         utility.append(norm-normalizedGalon/norm-normalizedDistance)
+
+    #     return utility
+                       
+           
+
+        
     
 class User :
     def __init__(self,x, y):
