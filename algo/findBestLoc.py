@@ -29,34 +29,15 @@ class Algo:
         self.locs.append(location)
 
     def choose_loc(self):
-        # highest = float("-inf")
-        # best = None
+        highest = 0
+        best = None
 
-        # for locs in self.locs:
-        #     if locs.utility > highest:
-        #         highest = locs
+        for locs in self.locs:
+            if locs.utility > highest:
+                highest = locs.utility
+                best = locs
             
-        # return highest.name    
-        # 
-        return sorted(self.locs, key=lambda x: (x["dist"])) 
-    
-    # def calculateUtil(self):
-    #     normalizedDistance = []
-    #     normalizedGalon = []
-    #     utility = []
-
-    #     for locs in self.locs:
-    #        normalizedDistance.append(self.get_highest*locs.distance) 
-    #        normalizedGalon.append(100*locs.galon)
-
-    #     for norm in normalizedDistance:
-    #         utility.append(norm-normalizedGalon/norm-normalizedDistance)
-
-    #     return utility
-                       
-           
-
-        
+        return best.name  
     
 class User :
     def __init__(self,x, y):
@@ -72,14 +53,6 @@ loc3 = Location("3", 20, 50, 30)
 loc4 = Location("4", 70, 40, 20)
 loc5 = Location("5", 75, 5, 70)
 
-print(loc1.calculate_distance())
-print(loc2.calculate_distance())
-print(loc3.calculate_distance())
-print(loc4.calculate_distance())
-print(loc5.calculate_distance())
-
-print()
-
 print(loc1.calculate_util())
 print(loc2.calculate_util())
 print(loc3.calculate_util())
@@ -92,8 +65,7 @@ findBestRoute.add_loc(loc3)
 findBestRoute.add_loc(loc4)
 findBestRoute.add_loc(loc5)
 
-best_route = findBestRoute.choose_loc()
-print(best_route)
+print(findBestRoute.choose_loc())
 print()
 
 

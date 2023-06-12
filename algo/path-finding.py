@@ -1,77 +1,62 @@
-import heapq
+import heapq, math
 
 class Node:
-    def __init__(self, name):
+    def __init__(self, name, x, y, heuristic_cost):
         self.name = name
-        self.neighbors = {}
+        self.x = x
+        self.y = y
+        self.heuristic_cost = heuristic_cost
+        self.neighbors = []
 
-    def add_neighbor(self, neighbor, cost):
-        self.neighbors[neighbor] = cost
+    def add_neighbor(self, neighbor):
+        self.neighbors.append((neighbor))
 
-class AStarSearch:
-    def __init__(self, start_node, goal_node_name):
-        self.start_node = start_node
-        self.goal_node_name = goal_node_name
+    def calculate_distance(nodeA, nodeB):
+        return math.sqrt(pow((nodeA.x - nodeB.x),2) + pow((nodeA.y - nodeB.start_y),2))
+    
+def a_star_search(start_node, goal_name):
+    open_list = [(start_node.heuristic_cost, 0, start_node)]  # Priority queue of nodes
+    visited = set()  # Set to keep track of visited nodes
 
-    def calculate_heuristic(self, node):
-        # Calculate the heuristic (estimated cost) from the current node to the goal node
-        # Replace this with your specific heuristic calculation logic
-        return 0
+    while open_list:
+        _, total_cost, current_node = heapq.heappop(open_list)
+        visited.add(current_node)
 
-    def search(self):
-        open_list = []
-        heapq.heappush(open_list, (0, self.start_node))
+        if current_node.name == goal_name:
+            return current_node
 
-        # Cost from start node to each explored node
-        g_score = {self.start_node: 0}
+        for neighbor, distance in current_node.neighbors:
+            if neighbor not in visited:
+                neighbor_cost = total_cost + distance
+                heuristic_cost = neighbor_cost + neighbor.heuristic_cost
+                heapq.heappush(open_list, (heuristic_cost, neighbor_cost, neighbor))
 
-        # Estimated total cost from start node to goal node via each explored node
-        f_score = {self.start_node: self.calculate_heuristic(self.start_node)}
+        print(f"Current node: {current_node.name}, Total cost: {total_cost}")
 
-        while open_list:
-            current_node = heapq.heappop(open_list)[1]
+    return None  # Goal not found
 
-            if current_node.name == self.goal_node_name:
-                # Goal node reached
-                return current_node
+# Example usage
+# Create the graph/map
+A = Node('A', 5, 10)
+B = Node('B', 3, 5)
+C = Node('C', 1, 2)
+D = Node('D', 8,9)
+E = Node('E', 0,7)
 
-            for neighbor, cost in current_node.neighbors.items():
-                # Calculate the tentative g_score for the neighbor node
-                tentative_g_score = g_score[current_node] + cost
+# Define the connections
+A.add_neighbor(B)
+A.add_neighbor(C)
+B.add_neighbor(D)
+C.add_neighbor(D)
+C.add_neighbor(E)
+D.add_neighbor(E)
 
-                if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
-                    # Update g_score and f_score for the neighbor node
-                    g_score[neighbor] = tentative_g_score
-                    f_score[neighbor] = tentative_g_score + self.calculate_heuristic(neighbor)
+# Perform A* search
+goal_name = 'E'
+start_node = A
+goal_node = a_star_search(start_node, goal_name)
 
-                    # Add the neighbor node to the open list with the updated f_score
-                    heapq.heappush(open_list, (f_score[neighbor], neighbor))
-
-        # Goal node not found
-        return None
-
-
-# Create nodes and define their neighbors and costs
-nodeA = Node("A")
-nodeB = Node("B")
-nodeC = Node("C")
-nodeD = Node("D")
-nodeE = Node("E")
-
-nodeA.add_neighbor(nodeB, 5)
-nodeA.add_neighbor(nodeC, 3)
-nodeB.add_neighbor(nodeD, 2)
-nodeC.add_neighbor(nodeD, 8)
-nodeC.add_neighbor(nodeE, 4)
-nodeD.add_neighbor(nodeE, 6)
-
-# Create an instance of AStarSearch with the start node and goal node name
-search = AStarSearch(nodeA, "E")
-
-# Perform the A* search
-result = search.search()
-
-if result:
-    print("Goal node found:", result.name)
+if goal_node:
+    print(f"Goal node '{goal_name}' found!")
 else:
-    print("Goal node not found")
+    print(f"Goal node '{goal_name}' not found.")
