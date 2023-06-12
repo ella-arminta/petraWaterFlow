@@ -1,23 +1,22 @@
-# MENCARI TARGET GALON
-# lokasi galon
+import math
+
 class Location:
-    def __init__(self, name, kondisi, koordinat, User):
-        self.name = name #nama
-        self.kondisi = kondisi #kondisi galon dalam persentase misal 80 = 80 persen
-        self.start = User.lokasi #lokasi user sekarang
-        self.koordinat = koordinat #koordinat galon
-        self.utility =self.calculate_utility()
+    def __init__(self, name, galon, x, y):
+        self.usr = User
+        self.name = name
+        self.galon = galon
+        self.start_x = usr.x
+        self.start_y = usr.y
+        self.x = x
+        self.y = y
+        self.utility = self.calculate_util()
 
-    def calculate_distance(self, start, end):
-        # end = koordinat galon
-        # self.start = lokasi user sekarang
+    def calculate_distance(self):
+        return math.sqrt(pow((self.x - self.start_x),2) + pow((self.y - self.start_y),2))
 
-        # dikali 2 dikali 0.5 ini apa yo bukan e tetep bakal jadi self.start * 1
-        return self.koordinat - self.start *2 * 0.5
-
-    def calculate_utility(self):
-        distance_utility = 1 / (self.calculate_distance(self.start, self.koordinat) + 1) #dalam satuan peluang 1/...
-        water_quality_utility = self.kondisi / 100 #dlm satuan persentase
+    def calculate_util(self):
+        distance_utility = 1 / (self.calculate_distance() + 1)
+        water_quality_utility = self.galon / 100
         return distance_utility + water_quality_utility
 
 
@@ -29,43 +28,46 @@ class Algo:
         self.locs.append(location)
 
     def choose_loc(self):
-        highest = float("-inf") #positive infinity
+        highest = float("-inf")
         best = None
 
         for locs in self.locs:
             if locs.utility > highest:
+                if locs.x == locs.start_x or locs.y == locs.start_y:
+                    highest = locs.utility
+
                 highest = locs.utility
                 best = locs.name
 
-        return best
-       
+        return best     
     
 class User :
-    def __init__(self,lokasi):
-        self.lokasi = 0
-
-
-# class Galon:
-#     def __init__(self, kondisi):
-#         self.location = Location
-#         self.kondisi = kondisi
-    
-#     def update_isi(name, newKondisi):
-#         self.kondisi = newKondisi
+    def __init__(self,x, y):
+        self.x = x
+        self.y = y
     
 findBestRoute = Algo()
-usr = User(0)
+usr = User(0,30)
 
-loc1 = Location("1", 80, 25, usr)
-loc2 = Location("2", 30,30, usr)
-loc3 = Location("3", 100,50, usr)
-loc4 = Location("4", 70, 30, usr)
-loc5 = Location("5", 75, 10, usr)
-print(loc1.calculate_utility())
-print(loc2.calculate_utility())
-print(loc3.calculate_utility())
-print(loc4.calculate_utility())
-print(loc5.calculate_utility())
+loc1 = Location("1", 70, 100, 35)
+loc2 = Location("2", 80, 5, 20)
+loc3 = Location("3", 20, 50, 30)
+loc4 = Location("4", 70, 40, 20)
+loc5 = Location("5", 75, 5, 40)
+
+print(loc1.calculate_distance())
+print(loc2.calculate_distance())
+print(loc3.calculate_distance())
+print(loc4.calculate_distance())
+print(loc5.calculate_distance())
+
+print()
+
+print(loc1.calculate_util())
+print(loc2.calculate_util())
+print(loc3.calculate_util())
+print(loc4.calculate_util())
+print(loc5.calculate_util())
 
 findBestRoute.add_loc(loc1)
 findBestRoute.add_loc(loc2)
@@ -73,15 +75,8 @@ findBestRoute.add_loc(loc3)
 findBestRoute.add_loc(loc4)
 findBestRoute.add_loc(loc5)
 
-# print(loc1.calculate_distance(loc1.start, loc1.koordinat))
-# print(loc2.calculate_distance(loc2.start, loc2.koordinat))
-# print(loc3.calculate_distance(loc3.start, loc3.koordinat))
-# print(loc4.calculate_distance(loc4.start, loc4.koordinat))
-# print(loc5.calculate_distance(loc5.start, loc5.koordinat))
-
 best_route = findBestRoute.choose_loc()
 print(best_route)
-# jarak_user = usr.lokasi - best_route.
 print()
 
 
