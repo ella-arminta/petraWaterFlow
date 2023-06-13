@@ -23,7 +23,7 @@ def index():
 
 @app.route('/p2')
 def p2() :
-    return render_template('index.html',ruangans=themap.daftarRuangan,lantai='plantai2')
+    return render_template('index.html',ruangans=themap.daftarRuangan,peta=themap.lantai,lantai='plantai2')
 
 # menerima posisi player
 @app.route('/send_position', methods=['POST'])
