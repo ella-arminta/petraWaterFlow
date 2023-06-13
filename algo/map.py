@@ -13,6 +13,16 @@ class Galon:
           self.x = x
           self.y = y
 
+class Ruangan:
+     def __init__(self,namaLantai,namaRuangan,koordinat,width,height):
+          self.namaRuangan = namaRuangan
+          self.namaLantai = namaLantai
+          x,y = koordinat
+          self.startX = x
+          self.startY = y
+          self.width = width
+          self.height = height
+     
 class Map():
     def __init__(self) -> None:
         self.lantai = {}
@@ -30,7 +40,8 @@ class Map():
     # setRuangan((xKoor,Y,koor),3,2) jadi parameter pertama masukin x dan y, parameter kedua panjangnya parameter 
     def createRuangan(self,namaLantai,kiriatas,width,height,namaRuangan):
         self.countRuangan += 1
-        self.daftarRuangan[self.countRuangan] = namaRuangan
+        self.daftarRuangan[self.countRuangan] = Ruangan(namaLantai,namaRuangan,kiriatas,width,height)
+
         lantai = self.lantai[namaLantai]
         x, y = kiriatas
         for i in range(width):

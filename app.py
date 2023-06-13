@@ -17,11 +17,11 @@ app = Flask(__name__)
 # app routes
 @app.route('/')
 def index():
-    return render_template('index.html',data=[],lantai='P1')
+    return render_template('index.html',ruangans=themap.daftarRuangan,lantai='P1')
 
 @app.route('/p2')
 def p2() :
-    return render_template('index.html',data=[],lantai='P2')
+    return render_template('index.html',ruangans=themap.daftarRuangan,lantai='P2')
 
 # menerima posisi player
 @app.route('/send_position', methods=['POST'])
