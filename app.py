@@ -79,11 +79,12 @@ def receive_position():
     findBest = fbl.Algo()
     findBest.add_loc(loc1)
     findBest.add_loc(loc2)
-    print(findBest.choose_loc())
+    # print(findBest.choose_loc())
+    bestLoc = findBest.choose_loc()
 
     # Process the position data as needed
     msg = 'Position received successfully' + str(x) + ' y : '+ str(y) + ' lantai '+ lantai  
-    response = {'message': msg}
+    response = {'message': msg, 'bestLoc' : bestLoc}
     return jsonify(response)
 
 if __name__ == '__main__':
