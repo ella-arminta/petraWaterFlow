@@ -1,12 +1,12 @@
 import math
+# import flask.app as a
 
 class Location:
-    def __init__(self, name, galon, x, y):
-        self.usr = User
+    def __init__(self, name, galon, x, y, User):
         self.name = name
         self.galon = galon
-        self.start_x = usr.x
-        self.start_y = usr.y
+        self.start_x = User.x
+        self.start_y = User.y
         self.x = x
         self.y = y
         self.utility = self.calculate_util()
@@ -45,28 +45,31 @@ class User :
         self.y = y
     
 findBestRoute = Algo()
-usr = User(0,30)
+# print(app.returnDistance())
+# getPos = a.receive_position()
+# usr = User(getPos.x,getPos.y)
+usr = User(0,0)
 
-loc1 = Location("1", 70, 100, 35)
-loc2 = Location("2", 80, 5, 20)
-loc3 = Location("3", 20, 50, 30)
-loc4 = Location("4", 70, 40, 20)
-loc5 = Location("5", 75, 5, 70)
+loc1 = Location("1", 70, 100, 35, usr)
+loc2 = Location("2", 80, 5, 20, usr)
+# loc3 = Location("3", 20, 50, 30)
+# loc4 = Location("4", 70, 40, 20)
+# loc5 = Location("5", 75, 5, 70)
 
 print(loc1.calculate_util())
 print(loc2.calculate_util())
-print(loc3.calculate_util())
-print(loc4.calculate_util())
-print(loc5.calculate_util())
+# print(loc3.calculate_util())
+# print(loc4.calculate_util())
+# print(loc5.calculate_util())
 
 findBestRoute.add_loc(loc1)
 findBestRoute.add_loc(loc2)
-findBestRoute.add_loc(loc3)
-findBestRoute.add_loc(loc4)
-findBestRoute.add_loc(loc5)
+# findBestRoute.add_loc(loc3)
+# findBestRoute.add_loc(loc4)
+# findBestRoute.add_loc(loc5)
 
 print(findBestRoute.choose_loc())
-print()
+# print()
 
 
 
