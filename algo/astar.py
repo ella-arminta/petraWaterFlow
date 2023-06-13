@@ -1,3 +1,4 @@
+# import mapping as map
 import heapq
 
 def calculate_heuristic(current, goal):
@@ -70,12 +71,3 @@ def a_star(maze):
                 g_scores[neighbor[0]][neighbor[1]] = tentative_g_score
                 f_scores[neighbor[0]][neighbor[1]] = tentative_g_score + h_scores[neighbor[0]][neighbor[1]]
                 heapq.heappush(open_set, (f_scores[neighbor[0]][neighbor[1]], neighbor))
-
-maze = [
-    [2, 0, 0, 0],
-    [0, 1, 1, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 3]
-]
-
-a_star(maze)

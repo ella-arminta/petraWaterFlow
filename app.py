@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, jsonify
-import algo.map as map
+import algo.mapping as mapping
 
-
-themap = map.Map()
+themap = mapping.Map()
 # Peta Utama
 themap.createLantai('plantai1')
 themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
