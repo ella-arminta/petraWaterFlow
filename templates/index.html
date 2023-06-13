@@ -26,7 +26,7 @@
     {% for ruangan in ruangans %}
         {% set i = loop.index %}
         {% if ruangans[i].namaLantai == 'plantai1' %}
-        <div class="namaRuangan" style="position: absolute;top: calc(10% * {{ ruangans[i].startX }});left: calc(2.56% * {{ ruangans[i].startY }});width: calc(2.56% * {{ ruangans[i].width }});height: calc(10% * {{ ruangans[i].height }});background-color:red;">{{ ruangans[i].namaRuangan }}</div>
+        <div class="namaRuangan" style="position: absolute;top: calc(10% * {{ ruangans[i].startX }});left: calc(2.56% * {{ ruangans[i].startY }});width: calc(2.56% * {{ ruangans[i].width }});height: calc(10% * {{ ruangans[i].height }});background-color:gray;">{{ ruangans[i].namaRuangan }}</div>
         {% endif %}
     {% endfor %}
 
