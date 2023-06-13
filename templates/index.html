@@ -15,9 +15,9 @@
         {% if col == 0 %}
         <div class="mycol"></div>
         {% elif col == -1 %}
-        <div class="mycol" style="background-color: aqua;"></div>
+        <div class="mycol" style="color:#0062ff;display:flex;justify-content:center;align-items:center;"><i class="fa-solid fa-bottle-water fa-2xl fa-flip" style="--fa-animation-duration: 3s;"></i></div>
         {% else %}
-        <div class="mycol" style="background-color: gray;"></div>
+        <div class="mycol" style="background-color: #ffff9dd9;"></div>
         {% endif %}
       {% endfor %}
     </div>
@@ -26,7 +26,7 @@
     {% for ruangan in ruangans %}
         {% set i = loop.index %}
         {% if ruangans[i].namaLantai == lantai %}
-        <div class="namaRuangan" style="position: absolute;top: calc(10% * {{ ruangans[i].startX }});left: calc(2.56% * {{ ruangans[i].startY }});width: calc(2.56% * {{ ruangans[i].width }});height: calc(10% * {{ ruangans[i].height }});background-color:gray;">{{ ruangans[i].namaRuangan }}</div>
+        <div class="namaRuangan" style="position: absolute;top: calc(10% * {{ ruangans[i].startX }});left: calc(2.56% * {{ ruangans[i].startY }});width: calc(2.56% * {{ ruangans[i].width }});height: calc(10% * {{ ruangans[i].height }});background-color:#ffff9dd9;">{{ ruangans[i].namaRuangan }}</div>
         {% endif %}
     {% endfor %}
 
