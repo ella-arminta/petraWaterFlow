@@ -18,13 +18,6 @@
         <div class="area" style="width:{{ area.w }}%; height:{{ area.h }}%; left:{{ area.x }}%; top:{{ area.y }}%; background-color:blue;border:blue solid 1px;">
             <h2 style="text-align:center;">{{ area.nama }}</h2>
         </div>
-    {% elif area.jenis == 'jalan' %}
-        <div class="area" style="width:{{ area.w }}%; height:{{ area.h }}%; left:{{ area.x }}%; top:{{ area.y }}%;border:1px solid black; background-color:antiquewhite;">
-        </div>
-    {% elif area.jenis == 'pintu' or area.jenis == 'lift' %}
-        <div class="area" style="width:{{ area.w }}%; height:{{ area.h }}%; left:{{ area.x }}%; top:{{ area.y }}%;border:1px solid black; background-color:crimson;">
-            <h2 style="text-align:center;">{{ area.nama }}</h2>
-        </div>
     {% endif %}
     {% endif %}
     {% endfor %}

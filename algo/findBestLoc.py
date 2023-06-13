@@ -2,8 +2,8 @@ import math
 # import flask.app as a
 
 class Location:
-    def __init__(self, name, galon, x, y, User):
-        self.name = name
+    def __init__(self, name,namaGalon, galon, x, y, User):
+        self.name = name #lantai
         self.galon = galon
         self.start_x = User.x
         self.start_y = User.y
@@ -11,6 +11,7 @@ class Location:
         self.y = y
         self.utility = self.calculate_util()
         self.distance = self.calculate_distance()
+        self.namaGalon = namaGalon
 
     def calculate_distance(self):
         return math.sqrt(pow((self.x - self.start_x),2) + pow((self.y - self.start_y),2))
@@ -37,7 +38,7 @@ class Algo:
                 highest = locs.utility
                 best = locs
             
-        return best.name  
+        return best.namaGalon  
     
 class User :
     def __init__(self,x, y):
