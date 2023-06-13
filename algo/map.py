@@ -1,4 +1,5 @@
-import algo.findBestLoc as fb
+import algo.findBestLoc as fb # -> kalo dirun di app.py pake ini
+# import findBestLoc as fb # -> kalo dirun di map.py pake ini
 import math
 class User :
             def __init__(self,x, y):

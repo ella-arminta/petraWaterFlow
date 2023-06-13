@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 import algo.map as map
 
-# Peta Utama
+
 themap = map.Map()
+# Peta Utama
 themap.createLantai('plantai1')
 themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
 themap.createRuangan('plantai1',(0,9),2,3,'ATK')
@@ -10,7 +11,6 @@ themap.createGalon('plantai1','plantai11',90,17,2)
 themap.createGalon('plantai1','plantai12',80,27,7)
 themap.printLantai('plantai1')
 
-# END ALGO
 # app run script
 app = Flask(__name__)
 
@@ -33,7 +33,7 @@ def receive_position():
     lantai = data['lantai']
     themap.setUserLoc(x,y)
 
-    # lokasi web dari user
+    # lokasi user dari web
     print('posisi x',x)
     print('posisi y',y)
     print('lantai', lantai)
