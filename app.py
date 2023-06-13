@@ -10,17 +10,20 @@ themap.createGalon('plantai1','plantai11',90,17,2)
 themap.createGalon('plantai1','plantai12',80,27,7)
 themap.printLantai('plantai1')
 
+themap.createLantai('plantai2')
+
+print(themap.daftarRuangan[1])
 # app run script
 app = Flask(__name__)
 
 # app routes
 @app.route('/')
 def index():
-    return render_template('index.html',ruangans=themap.daftarRuangan,lantai='P1')
+    return render_template('index.html',ruangans=themap.daftarRuangan,peta=themap.lantai,lantai='plantai1')
 
 @app.route('/p2')
 def p2() :
-    return render_template('index.html',ruangans=themap.daftarRuangan,lantai='P2')
+    return render_template('index.html',ruangans=themap.daftarRuangan,lantai='plantai2')
 
 # menerima posisi player
 @app.route('/send_position', methods=['POST'])

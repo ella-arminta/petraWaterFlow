@@ -24,8 +24,8 @@ nav, nav ul, nav ul li{
     display: inline;
 }
 .mycontainer{
-    width: 90%;
-    height: 90vh;
+    width: 97%;
+    height: 52vh;
     background-color: white;
     position: relative;
     cursor: pointer;
@@ -47,4 +47,21 @@ h2{
     position: absolute;
     bottom: 0;
     right: 0;
+}
+
+.myrow{
+    width: 100%;
+    height: 10%;
+    display: flex;
+}
+.mycol{
+    width:2.56%;
+    height: 100%;
+    border: 1px solid black;
+}
+.namaRuangan{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

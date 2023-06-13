@@ -1,7 +1,7 @@
-# import algo.findBestLoc as fb # -> kalo dirun di app.py pake ini
-import findBestLoc as fb # -> kalo dirun di map.py pake ini
-# import algo.astar as ast
-import astar as ast
+import algo.findBestLoc as fb # -> kalo dirun di app.py pake ini
+# import findBestLoc as fb # -> kalo dirun di map.py pake ini
+import algo.astar as ast
+# import astar as ast
 import math
 
 class User :
@@ -75,11 +75,6 @@ class Map():
 
     def findBestLoc(self):
         findBest = fb.Algo()
-
-        print(self.user.x)
-        print(self.user.y)
-
-   
         # add lokasi galon
         for g in self.galon:
             # newGalon =Galon(g.namaLantai,g.namaGalon,g.isigalon,g.x,g.y)
