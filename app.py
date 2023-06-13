@@ -63,6 +63,7 @@ def receive_position():
     x = data['x']
     y = data['y']
     lantai = data['lantai']
+
     # coding buat nentuin dia di node mana
     print('posisi x',x)
     print('posisi y',y)
@@ -72,13 +73,16 @@ def receive_position():
     user = fbl.User(x,y)
     print(user.x)
     print(user.y)
+
     loc1 = fbl.Location("1", 70, 100, 35, user)
     loc2 = fbl.Location("2", 80, 5, 20, user)
     print(loc1.calculate_util())
     print(loc2.calculate_util())
+    
     findBest = fbl.Algo()
     findBest.add_loc(loc1)
     findBest.add_loc(loc2)
+
     # print(findBest.choose_loc())
     bestLoc = findBest.choose_loc()
 
