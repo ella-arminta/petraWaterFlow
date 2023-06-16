@@ -49,9 +49,9 @@ class Map():
         lantai = self.lantai[namaLantai]
         x, y = kiriatas
         for i in range(width):
-            lantai[x][y+i] = self.countRuangan
+            lantai[y][x+i] = self.countRuangan
             for j in range(height):
-                lantai[x+j][y+i] = self.countRuangan
+                lantai[y+j][x+i] = self.countRuangan
 
     def printLantai(self,namaLantai):
         for row in self.lantai[namaLantai]:
@@ -109,14 +109,14 @@ class Map():
         #     print('No path found!')
 
 
-themap = Map()
-themap.createLantai('plantai1')
-themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
-themap.createRuangan('plantai1',(0,9),2,3,'ATK')
-# themap.createRuangan('plantai1', (0, 15), 5, 10, 'NONGKI')
-themap.createGalon('plantai1','plantai11',90,17,2)
-themap.createGalon('plantai1','plantai12',80,27,7)
-themap.createGalon('plantai1','plantai13', 100, 20,4)
-themap.printLantai('plantai1')
-print('best:',themap.findBestLoc())
+# themap = Map()
+# themap.createLantai('plantai1')
+# themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
+# themap.createRuangan('plantai1',(0,9),2,3,'ATK')
+# # themap.createRuangan('plantai1', (0, 15), 5, 10, 'NONGKI')
+# themap.createGalon('plantai1','plantai11',90,17,2)
+# themap.createGalon('plantai1','plantai12',80,27,7)
+# themap.createGalon('plantai1','plantai13', 100, 20,4)
+# themap.printLantai('plantai1')
+# print('best:',themap.findBestLoc())
 # themap.findPath('plantai1')
