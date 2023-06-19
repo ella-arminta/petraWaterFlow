@@ -51,8 +51,6 @@ class Map():
         # "nama gedung" : ["namalantai","namalantai"]
         #   "P" : [''plantai1','plantai2'] # ->
         # }
-        self.gedung = {}
-        self.gedung['hai'] = ['hai','bla']
 
     def getLantai(self,namaLantai):
          return self.lantai[namaLantai]
