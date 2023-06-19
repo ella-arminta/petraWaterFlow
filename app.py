@@ -33,7 +33,7 @@ def receive_position():
     x = data['x']
     y = data['y']
     lantai = data['lantai']
-    themap.setUserLoc(x,y)
+    themap.setUserLoc(x,y,lantai)
 
     # lokasi user dari web
     print('posisi x',x)

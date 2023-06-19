@@ -18,7 +18,7 @@ def get_neighbors(cell, maze):
 
     return neighbors
 
-def print_path(came_from, goal):
+def get_path(came_from, goal):
     # Reconstruct and print the shortest path from start to goal
     current = goal
     path = [current]
@@ -55,10 +55,10 @@ def a_star(maze):
         current = heapq.heappop(open_set)[1]
 
         if current == goal:
-            print_path(came_from, goal)
-            print('g : ',g_scores) # jarak dr skrg ke start
-            print('h: ',h_scores) # h itu jarak estimasi dr sekarang ke goal
-            print('f: ',f_scores)
+            get_path(came_from, goal)
+            # print('g : ',g_scores) # jarak dr skrg ke start
+            # print('h: ',h_scores) # h itu jarak estimasi dr sekarang ke goal
+            # print('f: ',f_scores)
             break
 
         neighbors = get_neighbors(current, maze)
