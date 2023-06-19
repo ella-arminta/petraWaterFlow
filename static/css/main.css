@@ -3,6 +3,7 @@ body{
     font-family: sans-serif;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.29);
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -27,6 +28,7 @@ nav, nav ul, nav ul li{
     width: 97%;
     height: 52vh;
     background-color: white;
+    /* background-color: #FFEEBB; */
     position: relative;
     cursor: pointer;
 }
@@ -57,7 +59,7 @@ h2{
 .mycol{
     width:2.56%;
     height: 100%;
-    border: 1px solid black;
+    border: 1px solid #ffff9dd9;
 }
 .namaRuangan{
     text-align: center;

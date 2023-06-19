@@ -39,13 +39,6 @@ class Map():
         
         # total jumlah ruangan yg ada digedung dan lantai manapun
         self.countRuangan = 0
-
-        # Id dari daftar ruangan didapet dr countRuangan
-        # Contoh struktur daftar ruangan : 
-        # self.daftarRuangan  = {
-        #    1 : Ruangan() -> object dr Ruangan 
-        #    2 : Ruangan() -> object dr Ruangan
-        # }
         self.daftarRuangan = {}
 
         # self.galon = [object dr galon, object dr galon]
@@ -210,6 +203,7 @@ themap.printGedung('P')
 # themap.printLantai('plantai2')
 # print('best:',themap.findBestLoc())
 # themap.findPath('plantai1')
+
 
 
 
