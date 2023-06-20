@@ -30,7 +30,12 @@ class Ruangan:
      
 class Map():
     def __init__(self):
-        
+        # self.gedung {
+        # "nama gedung" : ["namalantai","namalantai"]
+        #   "P" : [''plantai1','plantai2'] # ->
+        # }
+        self.gedung = {}
+
         # Contoh struktur lantai
         # self.lantai = {
         #   "plantai1" : [[11100000],[11000000],[0000111]] 0-> itu jalan 1 -> itu gedung
@@ -47,11 +52,29 @@ class Map():
         # object dr User
         self.user = User(14,0,'plantai1')
 
-        # self.gedung {
-        # "nama gedung" : ["namalantai","namalantai"]
-        #   "P" : [''plantai1','plantai2'] # ->
-        # }
+        
 
+# GEDUNG
+    def printGedung(self, namaGedung):
+        if namaGedung in self.gedung:
+            for row in self.gedung[namaGedung]:
+                print(*row)
+        # vee ini create gedung bentuk e gini ya nanti : 
+    # self.gedung {
+        # "nama gedung" : ["namalantai","namalantai"]
+    #   "P" : [''plantai1','plantai2'] # ->
+    # }
+    def createGedung(self, namaGedung,namaLantai):
+        if namaGedung not in self.gedung:
+            self.gedung[namaGedung] = []
+        self.gedung[namaGedung].append(namaLantai)
+
+    def isiGedung(self,namaGedung):
+        # jadi kalau mau liat di gedung P ada lantai apa aja pake ini. nti keluar array of nama lantai.
+        # "P" : [''plantai1','plantai2'] # -> return arraynya
+        return self.gedung[namaGedung]
+
+# LANTAI
     def getLantai(self,namaLantai):
          return self.lantai[namaLantai]
 
@@ -63,28 +86,20 @@ class Map():
             self.lantai[namaLantai] = newFloor
         else:
             self.lantai[namaLantai].append(newFloor)
+
+    def printLantai(self,namaLantai):
+        print('lantai : ',namaLantai)
+        for row in self.lantai[namaLantai]:
+            print(*row)
+
+    def printAllLantai(self):
+         for key, value in self.lantai.items():
+            print(key, ' gedung : ')
+            for row in value:
+                print(' '.join(str(cell) for cell in row))
+            print()
     
-    # vee ini create gedung bentuk e gini ya nanti : 
-    # self.gedung {
-        # "nama gedung" : ["namalantai","namalantai"]
-    #   "P" : [''plantai1','plantai2'] # ->
-    # }
-    def createGedung(self, namaGedung,namaLantai):
-        if namaGedung not in self.gedung:
-            self.gedung[namaGedung] = []
-        self.gedung[namaGedung].append(namaLantai)
-
-    def getLantaisFromGedung(self,namaGedung):
-        # jadi kalau mau liat di gedung P ada lantai apa aja pake ini. nti keluar array of nama lantai.
-        return self.gedung[namaGedung]
-
-    # code lama : 
-    # def createGedung(self, namaGedung, namaLantai):
-    #     arrLantai = self.lantai[namaLantai]
-    #     for i in len(arrLantai):
-    #         self.gedung[namaGedung] = self.lantai[namaLantai]
-            
-
+# RUANGAN
     # setRuangan((xKoor,Y,koor),3,2) jadi parameter pertama masukin x dan y, parameter kedua panjangnya parameter 
     def createRuangan(self,namaLantai,kiriatas,width,height,namaRuangan):
         self.countRuangan += 1
@@ -97,31 +112,19 @@ class Map():
             for j in range(height-1):
                 # print(self.lantai[namaLantai])
                 self.lantai[namaLantai][x+i][y+j] = self.countRuangan
-
-    def printLantai(self,namaLantai):
-        for row in self.lantai[namaLantai]:
-            print(*row)
-
-    def printAllLantai(self):
-         for key, value in self.lantai.items():
-            print(key)
-            for row in value:
-                print(' '.join(str(cell) for cell in row))
-            print()
-
-    def printGedung(self, namaGedung):
-        for row in self.gedung[namaGedung]:
-            print(*row)
     
+# GALON
     def createGalon(self,namaLantai,namaGalon,isigalon,x,y):
-        # print('isigalon ',isigalon)
-        # print('x',x)
-        # print('y',y)
-        # print(self.lantai[namaLantai][y])
         self.lantai[namaLantai][y][x] = -1
         self.galon.append(Galon(namaLantai,namaGalon,isigalon,x,y))
         pass
-
+    def printAllGalon(self):
+        for gal in self.galon:
+            print('Nama galon : ', gal.namaGalon)
+            print('Lantai : ',gal.namaLantai)
+            print('x : ',gal.x)
+            print('y : ',gal.y)
+# USER
     def setUserLoc(self,x,y):
         self.user.x = x
         self.user.y = y
@@ -129,23 +132,26 @@ class Map():
     def getUserLoc(self):
         return self.user
 
+# ALGORITMA
     def findBestLoc(self):            
             
         lantaiAsal = self.user.lantai
         lantaiAsal = 'plantai1'
         lantaitujuan = 'plantai2'
-        self.createPath(lantaiAsal,lantaitujuan)
+        # cek beda gedung
+        # cek beda lantai
 
-        # findBest = fb.Algo()
-        # # add lokasi galon
-        # for g in self.galon:
-        #     loc1 = fb.Location(g.namaLantai,g.namaGalon,g.isigalon,g.x,g.y,self.user)
+        # cari lokasi galon terbaik
+        findBest = fb.Algo()
+        # add lokasi galon
+        for g in self.galon:
+            loc1 = fb.Location(g.namaLantai,g.namaGalon,g.isigalon,g.x,g.y,self.user)
             
-        #     print(loc1.calculate_util())
-        #     findBest.add_loc(loc1)
+            print(loc1.calculate_util())
+            findBest.add_loc(loc1)
 
 
-        # return findBest.choose_loc()
+        return findBest.choose_loc()
     
     # def createPath(self,lantaiasal,lantaitujuan):
     #         # cek beda gedung gak
@@ -180,30 +186,18 @@ themap.createLantai('plantai1', 'P')
 themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
 themap.createRuangan('plantai1',(0,9),2,3,'ATK')
 
-# themap.createRuangan('plantai1', (0, 15), 5, 10, 'NONGKI')
-themap.createGalon('plantai1','plantai11',90,17,2)
-themap.createGalon('plantai1','plantai12',80,27,7)
-themap.createGalon('plantai1','plantai13', 100, 20,4)
-# themap.printLantai('plantai1')
-# print('best:',themap.findBestLoc())
-# themap.findPath('plantai1')
+themap.createGalon('plantai1','galon1',90,17,2)
+themap.createGalon('plantai1','galon2',80,27,7)
+themap.createGalon('plantai1','galon3', 100, 20,4)
+
 
 themap.createLantai('plantai2', 'P')
 themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
 themap.createRuangan('plantai2',(0,7),2,5,'ATK')
-# themap.createRuangan('plantai1', (0, 15), 5, 10, 'NONGKI')
-# themap.createGalon('plantai2','plantai21',90,17,2)
-# themap.createGalon('plantai2','plantai22',80,27,7)
-# themap.createGalon('plantai2','plantai23', 100, 20,4)
+
 themap.printAllLantai()
-themap.printGedung('P')
-# themap.findBestLoc()
-# themap.printLantai('plantai2')
-# print('best:',themap.findBestLoc())
-# themap.findPath('plantai1')
-
-
-
+themap.printLantai('plantai1')
+themap.printAllGalon()
 
 # RETURN PATH DLM BENTUK ARRAY OF COORDINATES
 # FIGURE OUT BEDA LANTAI
