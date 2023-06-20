@@ -124,6 +124,12 @@ class Map():
             print('Lantai : ',gal.namaLantai)
             print('x : ',gal.x)
             print('y : ',gal.y)
+
+    def getGalon(self,namaGalon):
+        for gal in self.galon:
+            if gal.namaGalon == namaGalon:
+                return gal
+    
 # USER
     def setUserLoc(self,x,y):
         self.user.x = x
@@ -150,8 +156,9 @@ class Map():
             print(loc1.calculate_util())
             findBest.add_loc(loc1)
 
+        galonTerbaik = self.getGalon(findBest.choose_loc())
+        print('best galon : ', galonTerbaik.namaGalon)
 
-        return findBest.choose_loc()
     
     # def createPath(self,lantaiasal,lantaitujuan):
     #         # cek beda gedung gak
@@ -190,7 +197,6 @@ themap.createGalon('plantai1','galon1',90,17,2)
 themap.createGalon('plantai1','galon2',80,27,7)
 themap.createGalon('plantai1','galon3', 100, 20,4)
 
-
 themap.createLantai('plantai2', 'P')
 themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
 themap.createRuangan('plantai2',(0,7),2,5,'ATK')
@@ -199,5 +205,6 @@ themap.printAllLantai()
 themap.printLantai('plantai1')
 themap.printAllGalon()
 
+themap.findBestLoc()
 # RETURN PATH DLM BENTUK ARRAY OF COORDINATES
 # FIGURE OUT BEDA LANTAI
