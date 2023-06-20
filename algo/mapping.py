@@ -3,6 +3,8 @@ import findBestLoc as fb # -> kalo dirun di map.py pake ini
 # import algo.astar as ast
 import astar as ast
 import math
+# import algo.antarGedungLantai as agl
+import antarGedungLantai as agl
 
 class User :
      def __init__(self,x, y, lantai):
@@ -52,7 +54,11 @@ class Map():
         # object dr User
         self.user = User(14,0,'plantai1')
 
-        
+        self.petaUkp = agl.Peta()
+
+# Peta UKP
+    def add_edge_petaUkp(self,area1:str,area2:str,cost):
+        self.petaUkp.add_edge(area1,area2,cost)
 
 # GEDUNG
     def printGedung(self, namaGedung):
@@ -73,6 +79,13 @@ class Map():
         # jadi kalau mau liat di gedung P ada lantai apa aja pake ini. nti keluar array of nama lantai.
         # "P" : [''plantai1','plantai2'] # -> return arraynya
         return self.gedung[namaGedung]
+    
+    def getGedungDariLantai(self,lantai):
+        for key, value in self.gedung.items():
+            if lantai in value:
+                return key
+        return None
+
 
 # LANTAI
     def getLantai(self,namaLantai):
@@ -106,12 +119,14 @@ class Map():
         self.daftarRuangan[self.countRuangan] = Ruangan(namaLantai,namaRuangan,kiriatas,width,height)
 
         
-        x, y = kiriatas
+        x,y = kiriatas
     
-        for i in range(width-1):
-            for j in range(height-1):
+        for i in range(height):
+            for j in range(width):
                 # print(self.lantai[namaLantai])
-                self.lantai[namaLantai][x+i][y+j] = self.countRuangan
+                print('koordinat ',(x+j),' ',(y+i))
+                self.printLantai('plantai2')
+                self.lantai[namaLantai][y+i][x+j] = self.countRuangan
     
 # GALON
     def createGalon(self,namaLantai,namaGalon,isigalon,x,y):
@@ -140,12 +155,9 @@ class Map():
 
 # ALGORITMA
     def findBestLoc(self):            
-            
-        lantaiAsal = self.user.lantai
-        lantaiAsal = 'plantai1'
-        lantaitujuan = 'plantai2'
-        # cek beda gedung
-        # cek beda lantai
+        
+        # Lokasi user
+        lantaiUser = self.user.lantai
 
         # cari lokasi galon terbaik
         findBest = fb.Algo()
@@ -158,6 +170,18 @@ class Map():
 
         galonTerbaik = self.getGalon(findBest.choose_loc())
         print('best galon : ', galonTerbaik.namaGalon)
+
+        pathToFind = []
+        # testing user dan galon
+        lantaiUser = 'plantai1'
+        lantaiTujuan = 'plantai2'
+
+        # cek beda gedung
+        # if self.getGedungDariLantai(lantaiUser) != self.getGedungDariLantai(lantaiTujuan):
+        #     j,.
+        # cek beda lantai
+
+
 
     
     # def createPath(self,lantaiasal,lantaitujuan):
@@ -189,20 +213,26 @@ class Map():
 
 
 themap = Map()
+
+
+themap.createLantai('plantai2', 'P')
+themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
+themap.createRuangan('plantai2',(10,4),4,2,'ATK')
+
+themap.add_edge_petaUkp('plantai1','plantai2',5)
+themap.add_edge_petaUkp('wlantai1','plantai1',10)
+
 themap.createLantai('plantai1', 'P')
-themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
-themap.createRuangan('plantai1',(0,9),2,3,'ATK')
+# themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
+# themap.createRuangan('plantai1',(0,9),2,3,'ATK')
 
 themap.createGalon('plantai1','galon1',90,17,2)
 themap.createGalon('plantai1','galon2',80,27,7)
 themap.createGalon('plantai1','galon3', 100, 20,4)
 
-themap.createLantai('plantai2', 'P')
-themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
-themap.createRuangan('plantai2',(0,7),2,5,'ATK')
 
-themap.printAllLantai()
-themap.printLantai('plantai1')
+# themap.printAllLantai()
+themap.printLantai('plantai2')
 themap.printAllGalon()
 
 themap.findBestLoc()

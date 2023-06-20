@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 import algo.mapping as mapping
 
+# Peta Besar
 themap = mapping.Map()
-# Peta Utama
+themap.add_edge_petaUkp('plantai1','plantai2',5)
+themap.add_edge_petaUkp('wlantai1','plantai1',10)
 
+# Peta per lantai
 # P lantai 1
-themap.createLantai('plantai1')
+themap.createLantai('plantai1','P')
 # bagian kiri
 themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
 themap.createRuangan('plantai1',(8,0),2,3,'ATK')
@@ -37,7 +40,7 @@ themap.createGalon('plantai1','plantai12',80,27,7)
 themap.printLantai('plantai1')
 
 # P lantai 2
-themap.createLantai('plantai2')
+themap.createLantai('plantai2','P')
 # bagian kiri
 themap.createRuangan('plantai2',(0,0),3,4,'P.204')
 themap.createRuangan('plantai2',(3,0),4,4,'LAB SI')
