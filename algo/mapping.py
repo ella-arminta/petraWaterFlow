@@ -124,8 +124,8 @@ class Map():
         for i in range(height):
             for j in range(width):
                 # print(self.lantai[namaLantai])
-                print('koordinat ',(x+j),' ',(y+i))
-                self.printLantai('plantai2')
+                # print('koordinat ',(x+j),' ',(y+i))
+                # self.printLantai('plantai2')
                 self.lantai[namaLantai][y+i][x+j] = self.countRuangan
     
 # GALON
@@ -171,38 +171,83 @@ class Map():
         galonTerbaik = self.getGalon(findBest.choose_loc())
         print('best galon : ', galonTerbaik.namaGalon)
 
-        pathToFind = []
-        # testing user dan galon
-        lantaiUser = 'plantai1'
-        lantaiTujuan = 'plantai2'
+        # self.createPath()
 
-        # cek beda gedung
-        # if self.getGedungDariLantai(lantaiUser) != self.getGedungDariLantai(lantaiTujuan):
-        #     j,.
-        # cek beda lantai
+
 
 
 
     
-    # def createPath(self,lantaiasal,lantaitujuan):
-    #         # cek beda gedung gak
-    #         # # cek beda lantai gk
-    #         # print(self.lantai)
-    #         flr = self.lantai[lantaiasal]
-    #         flr2 = self.lantai[lantaitujuan]
-    #         print(flr)
-    #         print(flr2)
-    #         # for x in range(len(flr)):
-    #         #     for y in range(len(flr[0])):
-    #         #         if flr[x][y] > 1 :
-    #         #             flr[x][y] = 1
+    def createPath(self,lantaiasal,lantaitujuan):
+            # beda lantai tambahan 2 baris
+            # beda gedung tambahan 2 column
+            # masukin semua gedung ke 1 array
+            arrHasil = []
+            width = 39
+            def addBottom(arraytujuan,array):
+                # tambaham 2 baris
+                # arrZero = [0]*len(array)
+                # arraytujuan.extend(arrZero)
+                # arraytujuan.extend(arrZero)
 
-    #         flr[7][2]= 2
-    #         flr[3][20]=3
-    #         # for row in flr:
-    #         #     print(*row)
+                # tambah array lantai
+                arraytujuan.extend(array)
+                return arraytujuan
 
-    #         return flr
+            def addRight(arraytujuan,array):
+                rows = len(arraytujuan)
+                cols = width
+                for i in range(len(array)):
+                    arraytujuan[i].extend(array[i])
+                    arraytujuan[i] += [8] * (cols - len(array[i]))
+
+                # supaya gk bolong
+                for i in range(len(arraytujuan)):
+                    print('loop ',i,'count ',len(arraytujuan[i]))
+                    if len(arraytujuan[i]) < len(arraytujuan[0]):
+                        count = len(arraytujuan[0]) - len(arraytujuan[i])
+                        for j in range(count):
+                            arraytujuan[i].append(1)
+                return arraytujuan
+            
+            print(self.gedung)
+            for key,val in self.gedung.items():
+                temparr = []
+                for namalantai in val :
+                    temparr = addBottom(temparr,self.lantai[namalantai])
+                if(len(arrHasil) == 0):
+                    arrHasil = addBottom(arrHasil,temparr)
+                else: 
+                    # tambahan = [['x' for _ in range(2)] for _ in range(len(arrHasil))]
+                    # arrHasil = addRight(arrHasil,tambahan)
+                    arrHasil = addRight(arrHasil,temparr)
+                temparr = []
+            
+            print(arrHasil)
+            for row in arrHasil:
+              print(' '.join(map(str, row)))
+                
+            
+
+
+            # pathToFind = []
+            # # testing user dan galon
+            # # cek beda lantai gk
+            # print(self.lantai)
+            # flr = self.lantai[lantaiasal]
+            # flr2 = self.lantai[lantaitujuan]
+            # print(flr)
+            # print(flr2)
+            # for x in range(len(flr)):
+            #    for y in range(len(flr[0])):
+            #        if flr[x][y] > 1 :
+            #             flr[x][y] = 1
+
+            # flr[7][2]= 2
+            # flr[3][20]=3
+            # for row in flr:
+            #     print(*row)
+            # return flr
     
     # def findPath(self, lantai):
     #     newPath = self.createPath(lantai, lantaitu)
@@ -218,10 +263,6 @@ themap = Map()
 themap.createLantai('plantai2', 'P')
 themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
 themap.createRuangan('plantai2',(10,4),4,2,'ATK')
-
-themap.add_edge_petaUkp('plantai1','plantai2',5)
-themap.add_edge_petaUkp('wlantai1','plantai1',10)
-
 themap.createLantai('plantai1', 'P')
 # themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
 # themap.createRuangan('plantai1',(0,9),2,3,'ATK')
@@ -230,11 +271,14 @@ themap.createGalon('plantai1','galon1',90,17,2)
 themap.createGalon('plantai1','galon2',80,27,7)
 themap.createGalon('plantai1','galon3', 100, 20,4)
 
+themap.createLantai('wlantai1','W')
+themap.createRuangan('wlantai1',(0,0),7,5,'HEHE')
 
-# themap.printAllLantai()
+themap.printAllLantai()
 themap.printLantai('plantai2')
 themap.printAllGalon()
 
 themap.findBestLoc()
+themap.createPath('plantai1','plantai2')
 # RETURN PATH DLM BENTUK ARRAY OF COORDINATES
 # FIGURE OUT BEDA LANTAI
