@@ -71,6 +71,36 @@ themap.createRuangan('plantai2',(26,4),1,2,'MEJA')
 themap.createGalon('plantai2','plantai21',50,9,4)
 themap.createGalon('plantai2','plantai22',75,27,7)
 
+# P lantai 3
+
+# W lantai 1
+themap.createLantai('wlantai1')
+# bagian kanan
+themap.createRuangan('wlantai1',(17,0),7,1,'GEDUNG B')
+themap.createRuangan('wlantai1',(17,3),14,4,'TAMAN')
+themap.createRuangan('wlantai1',(26,0),7,1,'GEDUNG C')
+themap.createRuangan('wlantai1',(34,0),5,1,'UPPK')
+themap.createRuangan('wlantai1',(33,3),4,1,'HUSH PUPPIES')
+themap.createRuangan('wlantai1',(33,4),4,1,'TPS')
+themap.createRuangan('wlantai1',(33,5),4,1,'SWALAYAN')
+themap.createRuangan('wlantai1',(33,6),3,2,'KELAS')
+themap.createRuangan('wlantai1',(36,6),3,2,'KELAS')
+themap.createRuangan('wlantai1',(33,6),6,2,'KANTIN')
+themap.createRuangan('wlantai1',(37,3),2,2,'TAMAN')
+themap.createRuangan('wlantai1',(15,9),2,1,'TANGGA')
+themap.createRuangan('wlantai1',(17,9),13,1,'KOLAM JODOH')
+themap.createRuangan('wlantai1',(30,8),1,2,'TANGGA')
+# galon w lantai 1
+themap.createGalon('wlantai1','wlantai11',80,5,0)
+themap.createGalon('wlantai1','wlantai12',60,9,1)
+themap.createGalon('wlantai1','wlantai11',90,20,1)
+themap.createGalon('wlantai1','wlantai11',50,29,1)
+themap.createGalon('wlantai1','wlantai11',95,32,4)
+themap.createGalon('wlantai1','wlantai11',80,32,7)
+themap.createGalon('wlantai1','wlantai11',65,24,8)
+
+
+
 print(themap.daftarRuangan[1])
 # app run script
 app = Flask(__name__)
