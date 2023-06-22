@@ -174,7 +174,7 @@ class Map():
 
         return flr
 
-    def createPath(self,lantaiasal,lantaitujuan):
+    def createPath(self):
             # beda lantai tambahan 2 baris
             # beda gedung tambahan 2 column
             # masukin semua gedung ke 1 array
@@ -234,8 +234,10 @@ class Map():
             arrHasil[yGoal][xGoal] = 3
 
             # print(arrHasil)
-            for row in arrHasil:
-                print(' '.join(map(str, row)))
+            # for row in arrHasil:
+            #     print(' '.join(map(str, row)))
+
+            return arrHasil
 
 
             # pathToFind = []
@@ -251,13 +253,22 @@ class Map():
             #        if flr[x][y] > 1 :
             #             flr[x][y] = 1
 
+    # add Goal disini setelah user self-pick
+    def constructAPath(self):
+        newPath = self.createPath()
+        data = ast.a_star(newPath)
+        print (data["path"])
+        return data["path"]
     
-    def constructAPath(self, goal):
-        newPath = self.createPath(goal)
-        path = ast.a_star(newPath)
+    # def getData(self):
+    #     newPath = self.createPath()
+    #     data = ast.a_star(newPath)
+
+    #     dataFiltered = ast.filterData(data)
+    #     print(dataFiltered["g"])
+       
         
-        if path is None:
-            print('No path found!')
+        
 
 
 themap = Map()
@@ -286,9 +297,9 @@ themap.printLantai('plantai2')
 themap.printAllGalon()
 
 themap.findBestLoc()
-themap.createPath('plantai1','plantai2')
-# RETURN PATH DLM BENTUK ARRAY OF COORDINATES
-# FIGURE OUT BEDA LANTAI
+themap.createPath()
+themap.constructAPath()
+
 # themap.createLantai('plantai2', 'P')
 # themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
 # themap.createRuangan('plantai2',(0,7),2,5,'ATK')

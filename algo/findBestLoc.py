@@ -25,7 +25,7 @@ class Location:
             self.y = self.y
 
         # beda lantai
-        if self.CountGedung > 1:
+        if self.countGedung > 1:
             self.x = self.x
             self.y = self.y + (41*self.countGedung-1)
 
