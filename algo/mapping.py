@@ -1,7 +1,7 @@
-# import algo.findBestLoc as fb # -> run app.py 
-import findBestLoc as fb # -> run map.py 
-# import algo.astar as ast
-import astar as ast
+import algo.findBestLoc as fb # -> run app.py 
+# import findBestLoc as fb # -> run map.py 
+import algo.astar as ast
+# import astar as ast
 
 class User :
      def __init__(self,x, y, lantai):
@@ -202,21 +202,21 @@ class Map():
 
 
 themap = Map()
-themap.createLantai('plantai1', 'P')
-themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
-themap.createRuangan('plantai1',(0,9),2,3,'ATK')
+# themap.createLantai('plantai1', 'P')
+# themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
+# themap.createRuangan('plantai1',(0,9),2,3,'ATK')
 
-themap.createGalon('plantai1','galon1',90,17,2)
-themap.createGalon('plantai1','galon2',80,27,7)
-themap.createGalon('plantai1','galon3', 100, 20,4)
+# themap.createGalon('plantai1','galon1',90,17,2)
+# themap.createGalon('plantai1','galon2',80,27,7)
+# themap.createGalon('plantai1','galon3', 100, 20,4)
 
-themap.createLantai('plantai2', 'P')
-themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
-themap.createRuangan('plantai2',(0,7),2,5,'ATK')
-themap.createGalon('plantai2', 'galon4', 100, 7, 5)
+# themap.createLantai('plantai2', 'P')
+# themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
+# themap.createRuangan('plantai2',(0,7),2,5,'ATK')
+# themap.createGalon('plantai2', 'galon4', 100, 7, 5)
 
-themap.printAllLantai()
-themap.printLantai('plantai1')
-themap.printAllGalon()
+# themap.printAllLantai()
+# themap.printLantai('plantai1')
+# themap.printAllGalon()
 
-themap.findBestLoc()
+# themap.findBestLoc()
