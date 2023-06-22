@@ -1,7 +1,8 @@
-import algo.findBestLoc as fb # -> run app.py 
-# import findBestLoc as fb # -> run map.py 
-import algo.astar as ast
-# import astar as ast
+# import algo.findBestLoc as fb # -> run app.py 
+import findBestLoc as fb # -> run map.py 
+# import algo.astar as ast
+import astar as ast
+
 
 class User :
      def __init__(self,x, y, lantai):
@@ -53,7 +54,7 @@ class Map():
         # object dr User
         self.user = User(14,0,'plantai1')
 
-        self.petaUkp = agl.Peta()
+        # self.petaUkp = agl.Peta()
 
 # Peta UKP
     def add_edge_petaUkp(self,area1:str,area2:str,cost):
@@ -88,7 +89,7 @@ class Map():
          return self.lantai[namaLantai]
 
     def createLantai(self,namaLantai,namaGedung):
-        self.createGedung(namaGedung,namaLantai)
+        # self.createGedung(namaGedung,namaLantai)
       
         newFloor =  [[0] * 39 for _ in range(10)]
         if namaLantai not in self.lantai or len(self.lantai) == 0:
@@ -137,11 +138,6 @@ class Map():
             print('Lantai : ',gal.namaLantai)
             print('x : ',gal.x)
             print('y : ',gal.y)
-
-    def getGalon(self,namaGalon):
-        for gal in self.galon:
-            if gal.namaGalon == namaGalon:
-                return gal
     
 # USER
     def setUserLoc(self,x,y):
@@ -159,19 +155,16 @@ class Map():
         # add lokasi galon
         for g in self.galon:
             loc1 = fb.Location(g.namaLantai,g.namaGalon,g.isigalon,g.x,g.y,self.user)
-            
+
             print(loc1.calculate_util())
             findBest.add_loc(loc1)
-
-        galonTerbaik = self.getGalon(findBest.choose_loc())
+            
+        galonTerbaik = findBest.choose_loc()
         print('best galon : ', galonTerbaik.namaGalon)
 
+        return galonTerbaik.x, galonTerbaik.y
+    
         # self.createPath()
-
-
-
-
-
     
     def createPath(self,lantaiasal,lantaitujuan):
             # beda lantai tambahan 2 baris
@@ -209,7 +202,8 @@ class Map():
             for key,val in self.gedung.items():
                 temparr = []
                 for namalantai in val :
-                    temparr = addBottom(temparr,self.lantai[namalantai])
+                    temp2arr = self.convertPath(self.lantai[namalantai])
+                    temparr = addBottom(temparr, temp2arr)
                 if(len(arrHasil) == 0):
                     arrHasil = addBottom(arrHasil,temparr)
                 else: 
@@ -217,12 +211,24 @@ class Map():
                     # arrHasil = addRight(arrHasil,tambahan)
                     arrHasil = addRight(arrHasil,temparr)
                 temparr = []
-            
+
             print(arrHasil)
-            for row in arrHasil:
-              print(' '.join(map(str, row)))
                 
-            
+            #       need goal / object's x,y coord to set the 3 for astar
+            x = self.user.x
+            y = self.user.y
+
+             # goal coords
+            xGoal, yGoal= self.findBestLoc()
+
+             # check lantai / gedung
+        
+            # arrHasil[x][y] = 2
+            # arrHasil[xGoal][yGoal] = 3
+
+            # print(arrHasil)
+            for row in arrHasil:
+                print(' '.join(map(str, row)))
 
 
             # pathToFind = []
@@ -245,7 +251,8 @@ class Map():
             # return flr
     #convert to 0 1 for a*
     def convertPath(self,lantai):
-        flr = self.lantai[lantai]
+        # flr = self.lantai[lantai]
+        flr = lantai
         for x in range(len(flr)):
                 for y in range(len(flr[0])):
                     if flr[x][y] > 1 :
@@ -253,38 +260,28 @@ class Map():
 
         return flr
     
-    def createPath(self, lantaiTujuan):
-            lantaiAsal = self.user.lantai
-            flr = self.lantai[lantaiAsal]
-            flr2 = []
+    # def createPath(self, lantaiTujuan):
+    #         lantaiAsal = self.user.lantai
+    #         flr = self.lantai[lantaiAsal]
+    #         flr2 = []
 
-            # cek beda gedung
-            if lantaiAsal[0] == lantaiTujuan[0]:
-                flr2 = self.lantai[lantaiTujuan]
+    #         # cek beda gedung
+    #         if lantaiAsal[0] == lantaiTujuan[0]:
+    #             flr2 = self.lantai[lantaiTujuan]
             
-            # cek beda lantai
-            if lantaiAsal == lantaiTujuan:
-                flr = self.lantai[lantaiAsal]
+    #         # cek beda lantai
+    #         if lantaiAsal == lantaiTujuan:
+    #             flr = self.lantai[lantaiAsal]
 
-            #convert for A*
-            newFlr = self.convertPath(flr)
-            newFlr2= self.convertPath(flr2)
+    #         #convert for A*
+    #         newFlr = self.convertPath(flr)
+    #         newFlr2= self.convertPath(flr2)
             
-            # need goal / object's x,y coord to set the 3 for astar
-            x = self.user.x
-            y = self.user.y
-
-            # goal coords
-            # xGoal 
-            # yGoal
-
-            # 
-            newFlr[x][y]= 2
-            newFlr2[10][20]= 3
+    
        
-            return flr
+    #         return flr
 
-            lantaiAsal = self.user.lantai
+    #         lantaiAsal = self.user.lantai
     
     def constructAPath(self, goal):
         newPath = self.createPath(goal)
@@ -305,9 +302,9 @@ themap.createLantai('plantai1', 'P')
 # themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
 # themap.createRuangan('plantai1',(0,9),2,3,'ATK')
 
-# themap.createGalon('plantai1','galon1',90,17,2)
-# themap.createGalon('plantai1','galon2',80,27,7)
-# themap.createGalon('plantai1','galon3', 100, 20,4)
+themap.createGalon('plantai1','galon1',90,17,2)
+themap.createGalon('plantai1','galon2',80,27,7)
+themap.createGalon('plantai1','galon3', 100, 20,4)
 
 themap.createLantai('wlantai1','W')
 themap.createRuangan('wlantai1',(0,0),7,5,'HEHE')

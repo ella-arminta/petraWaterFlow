@@ -6,3 +6,12 @@ perlu tanya : mapping mending galon banyak / lantai banyak (1 galon per lantai)
 TO DO :
 - create gedung & count
 - integrate with web's user coord
+
+
+
+
+
+- galon best loc set coord sebagai goal, convert -1 di best loc jdi 3 (goal a*)
+- create path (coordinate: (x,y)) & output f g h 
+- max 3 lantai 2 gedung (hard code to determine di lantai / gedung mana)
+- beda gedung itungan ttp lwt createLantai (tidak ada countGedung)
