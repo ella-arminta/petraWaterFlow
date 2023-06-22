@@ -89,7 +89,7 @@ class Map():
          return self.lantai[namaLantai]
 
     def createLantai(self,namaLantai,namaGedung):
-        # self.createGedung(namaGedung,namaLantai)
+        self.createGedung(namaGedung,namaLantai)
       
         newFloor =  [[0] * 39 for _ in range(10)]
         if namaLantai not in self.lantai or len(self.lantai) == 0:
@@ -170,6 +170,7 @@ class Map():
             # beda lantai tambahan 2 baris
             # beda gedung tambahan 2 column
             # masukin semua gedung ke 1 array
+
             arrHasil = []
             width = 39
             def addBottom(arraytujuan,array):
@@ -198,7 +199,7 @@ class Map():
                             arraytujuan[i].append(1)
                 return arraytujuan
             
-            print(self.gedung)
+            # print(self.gedung)
             for key,val in self.gedung.items():
                 temparr = []
                 for namalantai in val :
@@ -214,7 +215,6 @@ class Map():
 
             print(arrHasil)
                 
-            #       need goal / object's x,y coord to set the 3 for astar
             x = self.user.x
             y = self.user.y
 
@@ -294,11 +294,14 @@ class Map():
 themap = Map()
 
 
+themap.createLantai('plantai1', 'P')
 themap.createLantai('plantai2', 'P')
 themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
 themap.createRuangan('plantai2',(10,4),4,2,'ATK')
-themap.createLantai('plantai1', 'P')
 # themap.createLantai('plantai1', 'P')
+themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
+themap.createRuangan('plantai1',(10,4),4,2,'ATK')
+
 # themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
 # themap.createRuangan('plantai1',(0,9),2,3,'ATK')
 
