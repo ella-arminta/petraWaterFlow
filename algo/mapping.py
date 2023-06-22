@@ -1,7 +1,7 @@
-# import algo.findBestLoc as fb # -> run app.py 
-import findBestLoc as fb # -> run map.py 
-# import algo.astar as ast
-import astar as ast
+import algo.findBestLoc as fb # -> run app.py 
+# import findBestLoc as fb # -> run map.py 
+import algo.astar as ast
+# import astar as ast
 
 
 class User :
@@ -138,9 +138,10 @@ class Map():
             print('y : ',gal.y)
     
 # USER
-    def setUserLoc(self,x,y):
+    def setUserLoc(self,x,y,lantai):
         self.user.x = x
         self.user.y = y
+        self.user.lantai = lantai
 
     def getUserLoc(self):
         return self.user
@@ -216,8 +217,6 @@ class Map():
                 if(len(arrHasil) == 0):
                     arrHasil = addBottom(arrHasil,temparr)
                 else: 
-                    # tambahan = [['x' for _ in range(2)] for _ in range(len(arrHasil))]
-                    # arrHasil = addRight(arrHasil,tambahan)
                     arrHasil = addRight(arrHasil,temparr)
                 temparr = []
                 
@@ -259,6 +258,52 @@ class Map():
         if path is None:
             print('No path found!')
 
+    # buat array yang gabungan jadi array perlantai dan pergedung baut di webnya
+    def convertPathToWeb(self,path):
+        newPath = []
+        for i in range(len(path)): 
+            data = self.convertCoordinateToWeb((path[i][0],path[i][1]))
+            newPath.append(data)
+        
+        # for i in newPath:
+        #     print('gedung ',i['gedung'])
+        #     print('lantai ',i['lantai'])
+        #     print('x ',i['x'])
+        #     print('y ',i['y'])
+        return newPath
+    
+    def convertCoordinateToWeb(self,arrCoor):
+        gedungTemp = []
+        counter = 0
+        for key,val in self.gedung.items():
+            temp = [counter,key]
+            counter+=1
+            gedungTemp.append(temp)
+
+        x,y = arrCoor
+        data = {
+            "gedung" : 'P',
+            "lantai" : 1,
+            "x": 0,
+            "y": 0,
+        }
+        countX = 0
+        countY = 1
+
+        # beda gedung
+        while(x > 38):
+            countX+=1
+            x -= 39
+
+        # beda lantai
+        while(y > 9):
+            countY+=1
+            y -= 10
+        data['gedung'] = gedungTemp[countX][1]
+        data['lantai'] = countY
+        data["x"] = x
+        data["y"] = y
+        return data
 
 themap = Map()
 
@@ -285,10 +330,8 @@ themap.printAllLantai()
 themap.printLantai('plantai2')
 themap.printAllGalon()
 
-themap.findBestLoc()
-themap.createPath('plantai1','plantai2')
-# RETURN PATH DLM BENTUK ARRAY OF COORDINATES
-# FIGURE OUT BEDA LANTAI
+# themap.findBestLoc()
+# themap.createPath('plantai1','plantai2')
 # themap.createLantai('plantai2', 'P')
 # themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
 # themap.createRuangan('plantai2',(0,7),2,5,'ATK')

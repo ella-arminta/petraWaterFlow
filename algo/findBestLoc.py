@@ -2,8 +2,8 @@ import math
 
 class Location:
     def __init__(self, name, namaGalon, galon, x, y, User):
-        # from algo.mapping import Map as mp
-        from mapping import Map as mp
+        from algo.mapping import Map as mp
+        # from mapping import Map as mp
         mapp = mp()
         self.countLantai = mapp.countLantai
         self.countGedung = mapp.countGedung

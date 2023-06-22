@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 import algo.mapping as mapping
+import pprint
 
 # Peta Besar
 themap = mapping.Map()
-themap.add_edge_petaUkp('plantai1','plantai2',5)
-themap.add_edge_petaUkp('wlantai1','plantai1',10)
+# themap.add_edge_petaUkp('plantai1','plantai2',5)
+# themap.add_edge_petaUkp('wlantai1','plantai1',10)
 
 # Peta per lantai
 # P lantai 1
@@ -74,6 +75,9 @@ themap.createRuangan('plantai2',(26,4),1,2,'MEJA')
 themap.createGalon('plantai2','plantai21',50,9,4)
 themap.createGalon('plantai2','plantai22',75,27,7)
 
+# P lantai 2
+themap.createLantai('wlantai1','W')
+
 print(themap.daftarRuangan[1])
 # app run script
 app = Flask(__name__)
@@ -97,7 +101,16 @@ def receive_position():
     lantai = data['lantai']
     themap.setUserLoc(x,y,lantai)
 
+    
     # lokasi user dari web
+    hasilPath = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,11],[11,12],[40,13]]
+    hasilPath = themap.convertPathToWeb(hasilPath)
+    for i in hasilPath:
+            print('gedung ',i['gedung'])
+            print('lantai ',i['lantai'])
+            print('x ',i['x'])
+            print('y ',i['y'])
+
     print('posisi x',x)
     print('posisi y',y)
     print('lantai', lantai)
@@ -105,6 +118,8 @@ def receive_position():
     #findBestLocation algo
     bestLoc = themap.findBestLoc()
     print(bestLoc)
+
+    
 
     # Process the position data as needed
     msg = 'Position received successfully' + str(x) + ' y : '+ str(y) + ' lantai '+ lantai  
