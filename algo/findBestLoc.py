@@ -5,7 +5,8 @@ class Location:
         # from algo.mapping import Map as mp
         from mapping import Map as mp
         mapp = mp()
-        self.getCountLantai = mapp.countLantai
+        self.countLantai = mapp.countLantai
+        self.countGedung = mapp.countGedung
 
         self.name = name #lantai
         self.galon = galon
@@ -19,14 +20,14 @@ class Location:
 
     def setCoordLantai(self):
         # beda gedung
-        if self.getCountLantai > 1:
-            self.x = self.x + 12
+        if self.countLantai > 1:
+            self.x = self.x + (12*self.countLantai-1)
             self.y = self.y
 
         # beda lantai
-        # if self.getCountGedung > 1:
-        #     self.x = self.x
-        #     self.y = self.y + 41
+        if self.CountGedung > 1:
+            self.x = self.x
+            self.y = self.y + (41*self.countGedung-1)
 
         return self.x
           

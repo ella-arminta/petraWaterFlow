@@ -112,12 +112,10 @@ class Map():
             print()
     
 # RUANGAN
-    # setRuangan((xKoor,Y,koor),3,2) jadi parameter pertama masukin x dan y, parameter kedua panjangnya parameter 
     def createRuangan(self,namaLantai,kiriatas,width,height,namaRuangan):
         self.countRuangan += 1
         self.daftarRuangan[self.countRuangan] = Ruangan(namaLantai,namaRuangan,kiriatas,width,height)
 
-        
         x,y = kiriatas
     
         for i in range(height):
@@ -149,9 +147,9 @@ class Map():
 
 # ALGORITMA
     def findBestLoc(self):            
-        # importing from the findBestLoc
-        # cari lokasi galon terbaik
+        # importing from findBestLoc
         findBest = fb.Algo()
+
         # add lokasi galon
         for g in self.galon:
             loc1 = fb.Location(g.namaLantai,g.namaGalon,g.isigalon,g.x,g.y,self.user)
@@ -166,6 +164,16 @@ class Map():
     
         # self.createPath()
     
+        #convert to 0 1 for a*
+    def convertPath(self,lantai):
+        flr = lantai
+        for x in range(len(flr)):
+                for y in range(len(flr[0])):
+                    if flr[x][y] > 1 :
+                        flr[x][y] = 1
+
+        return flr
+
     def createPath(self,lantaiasal,lantaitujuan):
             # beda lantai tambahan 2 baris
             # beda gedung tambahan 2 column
@@ -212,8 +220,6 @@ class Map():
                     # arrHasil = addRight(arrHasil,tambahan)
                     arrHasil = addRight(arrHasil,temparr)
                 temparr = []
-
-            print(arrHasil)
                 
             x = self.user.x
             y = self.user.y
@@ -221,10 +227,11 @@ class Map():
              # goal coords
             xGoal, yGoal= self.findBestLoc()
 
-             # check lantai / gedung
-        
-            # arrHasil[x][y] = 2
-            # arrHasil[xGoal][yGoal] = 3
+            #convert to index for a*
+            arrHasil[y][x] = 2
+            print(xGoal, yGoal)
+            print(arrHasil[yGoal][xGoal])
+            arrHasil[yGoal][xGoal] = 3
 
             # print(arrHasil)
             for row in arrHasil:
@@ -244,44 +251,6 @@ class Map():
             #        if flr[x][y] > 1 :
             #             flr[x][y] = 1
 
-            # flr[7][2]= 2
-            # flr[3][20]=3
-            # for row in flr:
-            #     print(*row)
-            # return flr
-    #convert to 0 1 for a*
-    def convertPath(self,lantai):
-        # flr = self.lantai[lantai]
-        flr = lantai
-        for x in range(len(flr)):
-                for y in range(len(flr[0])):
-                    if flr[x][y] > 1 :
-                        flr[x][y] = 1
-
-        return flr
-    
-    # def createPath(self, lantaiTujuan):
-    #         lantaiAsal = self.user.lantai
-    #         flr = self.lantai[lantaiAsal]
-    #         flr2 = []
-
-    #         # cek beda gedung
-    #         if lantaiAsal[0] == lantaiTujuan[0]:
-    #             flr2 = self.lantai[lantaiTujuan]
-            
-    #         # cek beda lantai
-    #         if lantaiAsal == lantaiTujuan:
-    #             flr = self.lantai[lantaiAsal]
-
-    #         #convert for A*
-    #         newFlr = self.convertPath(flr)
-    #         newFlr2= self.convertPath(flr2)
-            
-    
-       
-    #         return flr
-
-    #         lantaiAsal = self.user.lantai
     
     def constructAPath(self, goal):
         newPath = self.createPath(goal)
@@ -296,18 +265,18 @@ themap = Map()
 
 themap.createLantai('plantai1', 'P')
 themap.createLantai('plantai2', 'P')
-themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
-themap.createRuangan('plantai2',(10,4),4,2,'ATK')
-# themap.createLantai('plantai1', 'P')
 themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
 themap.createRuangan('plantai1',(10,4),4,2,'ATK')
+themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
+themap.createRuangan('plantai2',(10,4),4,2,'ATK')
+
 
 # themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
 # themap.createRuangan('plantai1',(0,9),2,3,'ATK')
 
 themap.createGalon('plantai1','galon1',90,17,2)
 themap.createGalon('plantai1','galon2',80,27,7)
-themap.createGalon('plantai1','galon3', 100, 20,4)
+themap.createGalon('plantai1','galon3', 100, 13,4)
 
 themap.createLantai('wlantai1','W')
 themap.createRuangan('wlantai1',(0,0),7,5,'HEHE')
