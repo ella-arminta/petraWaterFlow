@@ -51,7 +51,6 @@ def printPath(path):
 def a_star(maze):
     rows, cols = len(maze), len(maze[0])
     start, goal = None, None
-
     for i in range(rows):
         for j in range(cols):
             if maze[i][j] == 2:

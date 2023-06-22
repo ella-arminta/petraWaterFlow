@@ -105,12 +105,23 @@
             .then(data => {
                 // Handle the response from the server if needed
                 console.log(data);
+                console.log(data.hasilPath)
+                for (let i = 0; i < data.hasilPath.length; i++) {
+                    console.log(data.hasilPath[i].gedung.toLowerCase()+'lantai'+data.hasilPath[i].lantai)
+                    if(data.hasilPath[i].gedung.toLowerCase()+'lantai'+data.hasilPath[i].lantai == "{{ lantai }}"){
+                        pathIni  = data.hasilPath[i]
+                        document.querySelector('#myrow-'+pathIni.y+' #mycol-'+pathIni.x).style.backgroundColor = '#ff506f';
+                    }
+                }
             })
             .catch(error => {
                 // Handle any errors that occur during the request
                 console.error('Error:', error);
             });
-            }
+        }
+        {% if not (hasilPath == []) %}
+         console.log("{{ hasilPath }}")
+        {% endif %}
     </script>
     {% block script %} {% endblock %}
 </body>

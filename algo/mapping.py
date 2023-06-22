@@ -256,7 +256,7 @@ class Map():
     def constructAPath(self):
         newPath = self.createPath()
         data = ast.a_star(newPath)
-        print (data["path"])
+        # print (data["path"])
         return data["path"]
     
     # def getData(self):
@@ -272,7 +272,8 @@ class Map():
     def convertPathToWeb(self,path):
         newPath = []
         for i in range(len(path)): 
-            data = self.convertCoordinateToWeb((path[i][0],path[i][1]))
+            x,y = path[i]
+            data = self.convertCoordinateToWeb((x,y))
             newPath.append(data)
         
         # for i in newPath:
@@ -315,34 +316,34 @@ class Map():
         data["y"] = y
         return data
 
-themap = Map()
+# themap = Map()
 
 
-themap.createLantai('plantai1', 'P')
-themap.createLantai('plantai2', 'P')
-themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
-themap.createRuangan('plantai1',(10,4),4,2,'ATK')
-themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
-themap.createRuangan('plantai2',(10,4),4,2,'ATK')
+# themap.createLantai('plantai1', 'P')
+# themap.createLantai('plantai2', 'P')
+# themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
+# themap.createRuangan('plantai1',(10,4),4,2,'ATK')
+# themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')
+# themap.createRuangan('plantai2',(10,4),4,2,'ATK')
 
 
 # themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
 # themap.createRuangan('plantai1',(0,9),2,3,'ATK')
 
-themap.createGalon('plantai1','galon1',90,17,2)
-themap.createGalon('plantai1','galon2',80,27,7)
-themap.createGalon('plantai1','galon3', 100, 13,4)
+# themap.createGalon('plantai1','galon1',90,17,2)
+# themap.createGalon('plantai1','galon2',80,27,7)
+# themap.createGalon('plantai1','galon3', 100, 13,4)
 
-themap.createLantai('wlantai1','W')
-themap.createRuangan('wlantai1',(0,0),7,5,'HEHE')
+# themap.createLantai('wlantai1','W')
+# themap.createRuangan('wlantai1',(0,0),7,5,'HEHE')
 
-themap.printAllLantai()
-themap.printLantai('plantai2')
-themap.printAllGalon()
+# themap.printAllLantai()
+# themap.printLantai('plantai2')
+# themap.printAllGalon()
 
-themap.findBestLoc()
-themap.createPath()
-themap.constructAPath()
+# themap.findBestLoc()
+# themap.createPath()
+# themap.constructAPath()
 
 # themap.createLantai('plantai2', 'P')
 # themap.createRuangan('plantai2',(0,0),7,5,'KANTIN')

@@ -4,6 +4,8 @@ import pprint
 
 # Peta Besar
 themap = mapping.Map()
+#Jalan ke galon dalam bentuk koordinat [0,2],[0,3]
+hasilPath = [] 
 # themap.add_edge_petaUkp('plantai1','plantai2',5)
 # themap.add_edge_petaUkp('wlantai1','plantai1',10)
 
@@ -79,17 +81,24 @@ themap.createGalon('plantai2','plantai22',75,27,7)
 themap.createLantai('wlantai1','W')
 
 print(themap.daftarRuangan[1])
+
 # app run script
 app = Flask(__name__)
 
 # app routes
 @app.route('/')
 def index():
-    return render_template('index.html',ruangans=themap.daftarRuangan,peta=themap.lantai,lantai='plantai1')
+    return render_template(
+        'index.html',
+        ruangans=themap.daftarRuangan,
+        peta=themap.lantai,
+        lantai='plantai1',
+        hasilPath=hasilPath,
+    )
 
 @app.route('/p2')
 def p2() :
-    return render_template('index.html',ruangans=themap.daftarRuangan,peta=themap.lantai,lantai='plantai2')
+    return render_template('index.html',ruangans=themap.daftarRuangan,peta=themap.lantai,lantai='plantai2',hasilPath=hasilPath)
 
 # menerima posisi player
 @app.route('/send_position', methods=['POST'])
@@ -101,16 +110,7 @@ def receive_position():
     lantai = data['lantai']
     themap.setUserLoc(x,y,lantai)
 
-    
     # lokasi user dari web
-    hasilPath = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,11],[11,12],[40,13]]
-    hasilPath = themap.convertPathToWeb(hasilPath)
-    for i in hasilPath:
-            print('gedung ',i['gedung'])
-            print('lantai ',i['lantai'])
-            print('x ',i['x'])
-            print('y ',i['y'])
-
     print('posisi x',x)
     print('posisi y',y)
     print('lantai', lantai)
@@ -118,12 +118,18 @@ def receive_position():
     #findBestLocation algo
     bestLoc = themap.findBestLoc()
     print(bestLoc)
-
-    
+    dataHasil = themap.constructAPath()
+    hasilPath = dataHasil[2]
+    hasilPath = themap.convertPathToWeb(hasilPath)
+    for i in hasilPath:
+        print('gedung ',i['gedung'])
+        print('lantai ',i['lantai'])
+        print('x ',i['x'])
+        print('y ',i['y'])
 
     # Process the position data as needed
     msg = 'Position received successfully' + str(x) + ' y : '+ str(y) + ' lantai '+ lantai  
-    response = {'message': msg, 'bestLoc' : bestLoc}
+    response = {'message': msg, 'bestLoc' : bestLoc, 'hasilPath' : hasilPath}
     return jsonify(response)
 
 if __name__ == '__main__':
