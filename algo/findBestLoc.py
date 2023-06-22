@@ -1,8 +1,11 @@
 import math
-# import flask.app as a
 
 class Location:
-    def __init__(self, name,namaGalon, galon, x, y, User):
+    def __init__(self, name, namaGalon, galon, x, y, User):
+        from algo.mapping import Map as mp
+        mapp = mp()
+        self.getCountLantai = mapp.countLantai
+
         self.name = name #lantai
         self.galon = galon
         self.start_x = User.x
@@ -13,8 +16,22 @@ class Location:
         self.distance = self.calculate_distance()
         self.namaGalon = namaGalon
 
+    def setCoordLantai(self):
+        # beda gedung
+        if self.getCountLantai > 1:
+            self.x = self.x + 12
+            self.y = self.y
+
+        # beda lantai
+        if self.getCountGedung > 1:
+            self.x = self.x
+            self.y = self.y + 41
+
+        return self.x, self.y
+        
     def calculate_distance(self):
-        return math.sqrt(pow((self.x - self.start_x),2) + pow((self.y - self.start_y),2))
+        x, y = self.setCoordLantai()
+        return math.sqrt(pow((x - self.start_x),2) + pow((y - self.start_y),2))
 
     def calculate_util(self):
         distance_utility = 1 / (self.calculate_distance() + 1)
