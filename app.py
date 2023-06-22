@@ -72,9 +72,58 @@ themap.createGalon('plantai2','plantai21',50,9,4)
 themap.createGalon('plantai2','plantai22',75,27,7)
 
 # P lantai 3
+themap.createLantai('plantai3')
+# bagian kiri
+themap.createRuangan('plantai3',(0,0),2,4,'P.304')
+themap.createRuangan('plantai3',(2,0),2,4,'P.305')
+themap.createRuangan('plantai3',(4,0),2,4,'P.306')
+themap.createRuangan('plantai3',(6,0),2,4,'P.307')
+themap.createRuangan('plantai3',(8,0),2,4,'P.308')
+themap.createRuangan('plantai3',(0,6),6,4,'TATA USAHA MAGISTER')
+themap.createRuangan('plantai3',(6,6),4,4,'RUANG BELAJAR MAGISTER')
+
+# bagian tengah
+themap.createRuangan('plantai3',(13,4),1,1,'') # tiang
+themap.createRuangan('plantai3',(11,0),6,1,'TOILET')
+themap.createRuangan('plantai3',(12,1),4,1,'LIFT')
+themap.createRuangan('plantai3',(10,9),1,1,'') # sambungan kiri tangga
+themap.createRuangan('plantai3',(17,9),1,1,'') # sambungan kanan tangga
+
+# bagian kanan
+themap.createRuangan('plantai3',(18,0),8,2,'RUANG DOSEN TEKNIK INFORMATIKA')
+themap.createRuangan('plantai3',(26,0),7,2,'TATA USAHA PRODI INFOR DAN TEKNIK ELEKTRO')
+themap.createRuangan('plantai3',(18,8),8,2,'LAB OPSI')
+themap.createRuangan('plantai3',(27,8),12,2,'LAB PRODI IOT')
+themap.createRuangan('plantai3',(26,9),1,1,'') # tangga
+themap.createRuangan('plantai3',(33,0),6,4,'RUANG DOSEN')
+themap.createRuangan('plantai3',(35,4),4,2,'RUANG DOSEN')
+themap.createRuangan('plantai3',(33,6),6,4,'RUANG DOSEN')
+themap.createRuangan('plantai3',(23,4),2,2,'LIFT')
+themap.createRuangan('plantai3',(31,3),1,1,'MEJA')
+themap.createRuangan('plantai3',(31,7),1,1,'MEJA')
+
+# galon p lt 3
+themap.createGalon('plantai3','plantai21',50,13,3)
+themap.createGalon('plantai3','plantai22',65,32,7)
 
 # W lantai 1
 themap.createLantai('wlantai1')
+# bagian kiri
+themap.createRuangan('wlantai1',(0,0),1,10,'PARKIRAN')
+themap.createRuangan('wlantai1',(2,0),3,1,'PANTRY HOTEL')
+themap.createRuangan('wlantai1',(8,0),4,1,'GEDUNG A')
+themap.createRuangan('wlantai1',(12,0),3,1,'TAMAN')
+themap.createRuangan('wlantai1',(2,2),4,2,'BANK MANDIRI')
+themap.createRuangan('wlantai1',(6,2),4,2,'BANK BRI')
+themap.createRuangan('wlantai1',(9,2),4,2,'BANK BNI')
+themap.createRuangan('wlantai1',(12,2),3,2,'PKPP')
+themap.createRuangan('wlantai1',(12,4),3,3,'BOOK STORE')
+themap.createRuangan('wlantai1',(2,6),4,3,'CAFE')
+themap.createRuangan('wlantai1',(2,9),4,1,'') # tangga
+themap.createRuangan('wlantai1',(6,6),1,4,'') # tangga
+themap.createRuangan('wlantai1',(7,7),4,3,'STUDENT SERVICES')
+themap.createRuangan('wlantai1',(12,8),3,2,'TAMAN')
+
 # bagian kanan
 themap.createRuangan('wlantai1',(17,0),7,1,'GEDUNG B')
 themap.createRuangan('wlantai1',(17,3),14,4,'TAMAN')
