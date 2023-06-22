@@ -2,3 +2,7 @@ cari lokasi galon : utility
 cari jalan ke lokasi : a*
 
 perlu tanya : mapping mending galon banyak / lantai banyak (1 galon per lantai)
+
+TO DO :
+- create gedung & count
+- integrate with web's user coord

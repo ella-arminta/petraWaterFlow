@@ -2,10 +2,10 @@
 import heapq
 
 def calculate_heuristic(current, goal):
-    # Calculate the Manhattan distance heuristic between two cells
+    # Manhattan heuristic
     return abs(current[0] - goal[0]) + abs(current[1] - goal[1])
 
-def get_neighbors(cell, maze):
+def getNeighbors(cell, maze):
     # Get the valid neighboring cells for a given cell in the maze
     neighbors = []
     rows, cols = len(maze), len(maze[0])
@@ -18,16 +18,19 @@ def get_neighbors(cell, maze):
 
     return neighbors
 
-def get_path(came_from, goal):
+def getPath(lastPos, goal):
     # Reconstruct and print the shortest path from start to goal
     current = goal
     path = [current]
 
-    while current in came_from:
-        current = came_from[current]
+    while current in lastPos:
+        current = lastPos[current]
         path.append(current)
 
     path.reverse()
+    return path
+
+def printPath(path):
     for cell in path:
         print(cell)
 
@@ -55,13 +58,14 @@ def a_star(maze):
         current = heapq.heappop(open_set)[1]
 
         if current == goal:
-            get_path(came_from, goal)
-            # print('g : ',g_scores) # jarak dr skrg ke start
-            # print('h: ',h_scores) # h itu jarak estimasi dr sekarang ke goal
-            # print('f: ',f_scores)
+            path = getPath(came_from, goal)
+            printPath(path)
+            print('g : ',g_scores) # jarak dr skrg ke start
+            print('h: ',h_scores) # h itu jarak estimasi dr sekarang ke goal
+            print('f: ',f_scores)
             break
 
-        neighbors = get_neighbors(current, maze)
+        neighbors = getNeighbors(current, maze)
 
         for neighbor in neighbors:
             tentative_g_score = g_scores[current[0]][current[1]] + 1
