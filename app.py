@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, jsonify, session
 import algo.mapping as mapping
 import pprint
+from flask import Flask
+import asyncio
 
 # Peta Besar
 themap = mapping.Map()
@@ -94,34 +96,21 @@ app.secret_key = 'secretKery'
 # app routes
 @app.route('/')
 def index():
-    if 'hasilPath' in session:
-        hasilPath = session['hasilPath']
-    else:
-        session['hasilPath'] = []
-        hasilPath = session['hasilPath']
-    print('session ',session['hasilPath'])
     return render_template(
         'index.html',
         ruangans=themap.daftarRuangan,
         peta=themap.lantai,
         lantai='plantai1',
-        hasilPath=hasilPath,
+        hasilPath=themap.getHasilJalanWeb(),
     )
 
 @app.route('/p2')
 def p2() :
-    if 'hasilPath' in session:
-        hasilPath = session['hasilPath']
-    else:
-        session['hasilPath'] = []
-        hasilPath = session['hasilPath']
-    print('session ',session['hasilPath'])
-
-    return render_template('index.html',ruangans=themap.daftarRuangan,peta=themap.lantai,lantai='plantai2',hasilPath=hasilPath)
+    return render_template('index.html',ruangans=themap.daftarRuangan,peta=themap.lantai,lantai='plantai2',hasilPath=themap.getHasilJalanWeb())
 
 # menerima posisi player
 @app.route('/send_position', methods=['POST'])
-def receive_position():
+async def receive_position():
     print("______ SEND POSITION ____ FIND BEST LOC")
     # ngambil x,y dan lantai dari web
     data = request.json
@@ -136,32 +125,27 @@ def receive_position():
     print('lantai', lantai)
 
     #findBestLocation algo
-    bestLoc = themap.findBestLoc()
+    bestLoc = await themap.findBestLoc()
     print("user", themap.user.x, themap.user.y)
     
-    dataHasil = themap.constructAPath() #waktu convert path data aslinya keubah yg di themap.lantai error
+    dataHasil =  themap.constructAPath() #waktu convert path data aslinya keubah yg di themap.lantai error
     print('Data hasil',dataHasil)
     hasilPath = dataHasil[2]
     print('hasilPath', hasilPath)
-    hasilPath = themap.convertPathToWeb(hasilPath)
+    hasilPath =  themap.convertPathToWeb(hasilPath)
     for i in hasilPath:
         print('gedung ',i['gedung'])
         print('lantai ',i['lantai'])
         print('x ',i['x'])
         print('y ',i['y'])
 
-    
-    if 'hasilPath' in session:
-        session['hasilPath'] = hasilPath
-    else:
-        session['hasilPath'] = []
-        session['hasilPath'] = hasilPath
+    themap.setHasilJalanWeb(hasilPath)
+   # Await the completion of setHasilJalanWeb() before proceeding
 
-    print('session ',session['hasilPath'])
 
     # Process the position data as needed
     msg = 'Position received successfully' + str(x) + ' y : '+ str(y) + ' lantai '+ lantai  
-    response = {'message': msg, 'bestLoc' : bestLoc, 'hasilPath' : session['hasilPath']}
+    response = {'message': msg, 'bestLoc' : bestLoc, 'hasilPath' : themap.getHasilJalanWeb()}
     return jsonify(response)
 
 if __name__ == '__main__':

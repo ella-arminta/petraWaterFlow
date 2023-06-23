@@ -3,6 +3,7 @@ import algo.findBestLoc as fb # -> run app.py
 import algo.astar as ast
 import copy
 # import astar as ast
+import asyncio
 
 
 class User :
@@ -57,8 +58,15 @@ class Map():
         self.arrHasil = []
 
         # self.petaUkp = agl.Peta()
+        self.hasilJalanWeb = []
 
 # Peta UKP
+    def setHasilJalanWeb(self,array):
+        self.hasilJalanWeb = array
+    
+    def getHasilJalanWeb(self):
+        return self.hasilJalanWeb
+    
     def add_edge_petaUkp(self,area1:str,area2:str,cost):
         self.petaUkp.add_edge(area1,area2,cost)
 
@@ -151,6 +159,7 @@ class Map():
 # ALGORITMA
     def findBestLoc(self):            
         # importing from findBestLoc
+        
         findBest = fb.Algo()
 
         # add lokasi galon
@@ -162,7 +171,7 @@ class Map():
             
         galonTerbaik = findBest.choose_loc()
         print('best galon : ', galonTerbaik.namaGalon)
-
+        # await asyncio.sleep(1)
         return galonTerbaik.x, galonTerbaik.y
     
         # self.createPath()
