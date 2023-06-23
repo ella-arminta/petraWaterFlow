@@ -85,7 +85,11 @@ print(themap.daftarRuangan[1])
 # app run script
 app = Flask(__name__)
 app.secret_key = 'secretKery'
-
+# hapus session
+@app.before_request
+def clear_session():
+    if not request.path.startswith('/static'):
+        session.pop('hasilPath', None)
 
 # app routes
 @app.route('/')
@@ -121,8 +125,8 @@ def receive_position():
     print("______ SEND POSITION ____ FIND BEST LOC")
     # ngambil x,y dan lantai dari web
     data = request.json
-    x = data['x']
-    y = data['y']
+    x = data['y']
+    y = data['x']
     lantai = data['lantai']
     themap.setUserLoc(x,y,lantai)
 
