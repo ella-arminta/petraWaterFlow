@@ -29,7 +29,7 @@ themap.createRuangan('plantai1',(22,6),2,1,'MEJA')
 themap.createRuangan('plantai1',(25,6),2,1,'MEJA')
 themap.createRuangan('plantai1',(28,6),2,1,'MEJA')
 themap.createRuangan('plantai1',(18,8),7,2,'KURSI')
-themap.createRuangan('plantai1',(26,9),1,1,'') # tangga
+themap.createRuangan('plantai1',(26,9),1,1,'Tangga') # tangga
 themap.createRuangan('plantai1',(28,8),7,2,'LAB T. INDUSTRI')
 themap.createRuangan('plantai1',(35,8),2,2,'UPPK')
 themap.createRuangan('plantai1',(37,8),2,2,'KONSELING')
@@ -86,10 +86,10 @@ print(themap.daftarRuangan[1])
 app = Flask(__name__)
 app.secret_key = 'secretKery'
 # hapus session
-@app.before_request
-def clear_session():
-    if not request.path.startswith('/static'):
-        session.pop('hasilPath', None)
+# @app.before_request
+# def clear_session():
+#     if not request.path.startswith('/static'):
+#         session.pop('hasilPath', None)
 
 # app routes
 @app.route('/')
@@ -125,8 +125,8 @@ def receive_position():
     print("______ SEND POSITION ____ FIND BEST LOC")
     # ngambil x,y dan lantai dari web
     data = request.json
-    x = data['y']
-    y = data['x']
+    x = data['x']
+    y = data['y']
     lantai = data['lantai']
     themap.setUserLoc(x,y,lantai)
 
@@ -141,6 +141,7 @@ def receive_position():
     print(bestLoc)
     
     dataHasil = themap.constructAPath() #waktu convert path data aslinya keubah yg di themap.lantai error
+    print('Data hasil',dataHasil)
     hasilPath = dataHasil[2]
     print('hasilPath', hasilPath)
     hasilPath = themap.convertPathToWeb(hasilPath)
