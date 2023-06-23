@@ -77,7 +77,7 @@ themap.createGalon('plantai2','plantai21',50,9,4)
 themap.createGalon('plantai2','plantai22',75,27,7)
 
 # P lantai 3
-themap.createLantai('plantai3')
+themap.createLantai('plantai3','P')
 # bagian kiri
 themap.createRuangan('plantai3',(0,0),2,4,'P.304')
 themap.createRuangan('plantai3',(2,0),2,4,'P.305')
@@ -112,7 +112,7 @@ themap.createGalon('plantai3','plantai21',50,13,3)
 themap.createGalon('plantai3','plantai22',65,32,7)
 
 # W lantai 1
-themap.createLantai('wlantai1')
+themap.createLantai('wlantai1','W')
 # bagian kiri
 themap.createRuangan('wlantai1',(0,0),1,10,'PARKIRAN')
 themap.createRuangan('wlantai1',(2,0),3,1,'PANTRY HOTEL')
