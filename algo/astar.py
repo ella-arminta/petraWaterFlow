@@ -76,12 +76,11 @@ def a_star(maze):
             for i in range(len(g_scores)):
                 heur = [[],[],[],[],[]]
                 for j in range(len(g_scores[0])):
-                    g = g_scores[i][j]
-                    h = h_scores[i][j]
-                    f = f_scores[i][j]
+                    g = str(g_scores[i][j])
+                    h = str(h_scores[i][j])
+                    f = str(f_scores[i][j])
                 
-                    heur = [i, j, g, h, f]
-            
+                    heur = [j, i, g, h, f]
                     # print(heur)
                     data["heu"].append(heur)
 

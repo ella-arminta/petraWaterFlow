@@ -106,6 +106,20 @@
                 // Handle the response from the server if needed
                 console.log(data);
                 console.log(data.hasilPath)
+                var heu = data.heu
+                console.log(data.heu[0])
+
+                for (let index = 0; index < heu.length; index++) {
+                    var x = String(heu[index][0])
+                    var y = String(heu[index][1])
+                    var g = String(heu[index][2])
+                    var h = String(heu[index][3])
+                    var f = String(heu[index][4])
+                    console.log(x+' '+y+' '+' '+g+' '+h+' '+f)
+                    console.log('nestt')
+                    document.querySelector("#myrow-"+y+" #mycol-"+x).innerHTML = '<div class="detail">g:'+g+'<br>h:'+h+'<br>f:'+f+'<br></div>'
+                   
+                }
                
                 for (let i = 0; i < data.hasilPath.length; i++) {
                     console.log(data.hasilPath[i].gedung.toLowerCase()+'lantai'+data.hasilPath[i].lantai)
@@ -132,6 +146,23 @@
                 document.querySelector('#myrow-'+pathIni.y+' #mycol-'+pathIni.x).style.backgroundColor = '#ff506f';
                 console.log(document.querySelector('#myrow-'+pathIni.y+' #mycol-'+pathIni.x))
             }
+        }
+
+        var heu = JSON.parse('{{ heu | tojson | safe }}');
+        for (let index = 0; index < heu.length; index++) {
+            if (heu[index][5] == '{{ lantai }}'){
+                var x = String(heu[index][0])
+                var y = String(heu[index][1])
+                var g = String(heu[index][2])
+                var h = String(heu[index][3])
+                var f = String(heu[index][4])
+                console.log(x+' '+y+' '+' '+g+' '+h+' '+f)
+                document.querySelector("#myrow-"+y+" #mycol-"+x).innerHTML = '<div class="detail">g:'+g+'<br>h:'+h+'<br>f:'+f+'<br></div>'
+
+            }
+            
+            
+            console.log('nestt')
             
         }
     </script>

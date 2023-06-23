@@ -1,6 +1,6 @@
-# import algo.findBestLoc as fb # -> run app.py 
-import findBestLoc as fb # -> run map.py 
-# import algo.astar as ast
+import algo.findBestLoc as fb # -> run app.py 
+# import findBestLoc as fb # -> run map.py 
+import algo.astar as ast
 import copy
 # import astar as ast
 
@@ -58,6 +58,7 @@ class Map():
 
         # self.petaUkp = agl.Peta()
         self.hasilJalanWeb = []
+        self.heu = []
 
 # Peta UKP
     def setHasilJalanWeb(self,array):
@@ -65,6 +66,7 @@ class Map():
     
     def getHasilJalanWeb(self):
         return self.hasilJalanWeb
+    
     
     def add_edge_petaUkp(self,area1:str,area2:str,cost):
         self.petaUkp.add_edge(area1,area2,cost)
@@ -268,17 +270,37 @@ class Map():
         flippedPath = []
         for path in data["path"]:
             flippedPath.append([(coord[1], coord[0]) for coord in path])
-        # print (data["path"])
+        print(flippedPath)
         return flippedPath
     
 
     def getHeu(self):
         newPath = self.createPath()
         data = ast.a_star(newPath)
+        self.heu = data["heu"]
 
-        return data["heu"]
+        gedungTemp = []
+        counter = 0
+        for key,val in self.gedung.items():
+            temp = [counter,key]
+            counter+=1
+            gedungTemp.append(temp)
+        
+        for i in range(len(self.heu)):
+            x = self.heu[i][0]
+            y = self.heu[i][1]
+            data = self.convertCoordinateToWeb((x,y))
+            self.heu[i][0] = data['x']
+            self.heu[i][1] = data['y']
+            strLantai = data['gedung'].lower()+'lantai'+str(data['lantai'])
+            self.heu[i].append(strLantai)
+
+        
+        return self.heu
     
-
+    def returnHeu(self):
+        return self.heu
+    
     # buat array yang gabungan jadi array perlantai dan pergedung baut di webnya
     def convertPathToWeb(self,path):
         newPath = []
@@ -328,79 +350,79 @@ class Map():
         data["y"] = y
         return data
 
-# TestCase   
-themap = Map()
+# # TestCase   
+# themap = Map()
 
-themap.createLantai('plantai1','P')
-# bagian kiri
-themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
-themap.createRuangan('plantai1',(8,0),2,3,'ATK')
-themap.createRuangan('plantai1',(0,8),10,2,'KURSI')
-# bagian tengah
-themap.createRuangan('plantai1',(11,0),6,1,'TOILET')
-themap.createRuangan('plantai1',(12,1),4,1,'LIFT')
-themap.createRuangan('plantai1',(11,8),6,2,'TANGGA')
-themap.createRuangan('plantai1',(17,3),1,2,'MEJA')
-themap.createRuangan('plantai1',(16,6),2,1,'MEJA')
-# bagian kanan
-themap.createRuangan('plantai1',(18,0),6,5,'LAB FISIKA')
-themap.createRuangan('plantai1',(24,1),1,4,'LIFT')
-themap.createRuangan('plantai1',(19,6),2,1,'MEJA')
-themap.createRuangan('plantai1',(22,6),2,1,'MEJA')
-themap.createRuangan('plantai1',(25,6),2,1,'MEJA')
-themap.createRuangan('plantai1',(28,6),2,1,'MEJA')
-themap.createRuangan('plantai1',(18,8),7,2,'KURSI')
-themap.createRuangan('plantai1',(26,9),1,1,'') # tangga
-themap.createRuangan('plantai1',(28,8),7,2,'LAB T. INDUSTRI')
-themap.createRuangan('plantai1',(35,8),2,2,'UPPK')
-themap.createRuangan('plantai1',(37,8),2,2,'KONSELING')
-themap.createRuangan('plantai1',(26,0),9,2,'LAB T. INDUSTRI')
-themap.createRuangan('plantai1',(36,0),3,2,'TOILET')
-themap.createRuangan('plantai1',(35,3),2,1,'MEJA')
-# galon p lt 1
-themap.createGalon('plantai1','plantai11',90,17,2)
-themap.createGalon('plantai1','plantai12',80,27,7)
+# themap.createLantai('plantai1','P')
+# # bagian kiri
+# themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
+# themap.createRuangan('plantai1',(8,0),2,3,'ATK')
+# themap.createRuangan('plantai1',(0,8),10,2,'KURSI')
+# # bagian tengah
+# themap.createRuangan('plantai1',(11,0),6,1,'TOILET')
+# themap.createRuangan('plantai1',(12,1),4,1,'LIFT')
+# themap.createRuangan('plantai1',(11,8),6,2,'TANGGA')
+# themap.createRuangan('plantai1',(17,3),1,2,'MEJA')
+# themap.createRuangan('plantai1',(16,6),2,1,'MEJA')
+# # bagian kanan
+# themap.createRuangan('plantai1',(18,0),6,5,'LAB FISIKA')
+# themap.createRuangan('plantai1',(24,1),1,4,'LIFT')
+# themap.createRuangan('plantai1',(19,6),2,1,'MEJA')
+# themap.createRuangan('plantai1',(22,6),2,1,'MEJA')
+# themap.createRuangan('plantai1',(25,6),2,1,'MEJA')
+# themap.createRuangan('plantai1',(28,6),2,1,'MEJA')
+# themap.createRuangan('plantai1',(18,8),7,2,'KURSI')
+# themap.createRuangan('plantai1',(26,9),1,1,'') # tangga
+# themap.createRuangan('plantai1',(28,8),7,2,'LAB T. INDUSTRI')
+# themap.createRuangan('plantai1',(35,8),2,2,'UPPK')
+# themap.createRuangan('plantai1',(37,8),2,2,'KONSELING')
+# themap.createRuangan('plantai1',(26,0),9,2,'LAB T. INDUSTRI')
+# themap.createRuangan('plantai1',(36,0),3,2,'TOILET')
+# themap.createRuangan('plantai1',(35,3),2,1,'MEJA')
+# # galon p lt 1
+# themap.createGalon('plantai1','plantai11',90,17,2)
+# themap.createGalon('plantai1','plantai12',80,27,7)
 
-# P lantai 2
-themap.createLantai('plantai2','P')
-# bagian kiri
-themap.createRuangan('plantai2',(0,0),3,4,'P.204')
-themap.createRuangan('plantai2',(3,0),4,4,'LAB SI')
-themap.createRuangan('plantai2',(7,0),3,4,'LAB PG')
-themap.createRuangan('plantai2',(0,6),3,4,'P.203')
-themap.createRuangan('plantai2',(3,6),3,4,'P.202')
-themap.createRuangan('plantai2',(6,6),2,4,'LAB STUDIO')
-themap.createRuangan('plantai2',(8,6),2,4,'LAB MOBDEV')
-# bagian tengah
-themap.createRuangan('plantai2',(10,4),1,1,'') # tiang
-themap.createRuangan('plantai2',(12,4),1,1,'') # tiang
-themap.createRuangan('plantai2',(13,3),2,3,'MEJA')
-themap.createRuangan('plantai2',(15,4),1,1,'') # tiang
-themap.createRuangan('plantai2',(16,3),1,3,'MEJA')
-themap.createRuangan('plantai2',(17,4),1,2,'LOKER')
-themap.createRuangan('plantai2',(11,0),6,1,'TOILET')
-themap.createRuangan('plantai2',(12,1),4,1,'LIFT')
-themap.createRuangan('plantai2',(11,8),6,2,'TANGGA')
-themap.createRuangan('plantai2',(10,9),1,1,'') # sambungan kiri tangga
-themap.createRuangan('plantai2',(17,9),1,1,'') # sambungan kanan tangga
-# bagian kanan
-themap.createRuangan('plantai2',(18,0),5,2,'LAB JK')
-themap.createRuangan('plantai2',(23,0),5,2,'LAB SC')
-themap.createRuangan('plantai2',(18,8),7,2,'LAB MM')
-themap.createRuangan('plantai2',(28,0),11,8,'PUSKOM P')
-themap.createRuangan('plantai2',(27,8),12,2,'LAB PRODI T. MESIN')
-themap.createRuangan('plantai2',(26,9),1,1,'') # tangga
-themap.createRuangan('plantai2',(23,4),2,2,'LIFT')
-themap.createRuangan('plantai2',(26,4),1,2,'MEJA')
-# galon p lt 2
-themap.createGalon('plantai2','plantai21',50,9,4)
-themap.createGalon('plantai2','plantai22',75,27,7)
+# # P lantai 2
+# themap.createLantai('plantai2','P')
+# # bagian kiri
+# themap.createRuangan('plantai2',(0,0),3,4,'P.204')
+# themap.createRuangan('plantai2',(3,0),4,4,'LAB SI')
+# themap.createRuangan('plantai2',(7,0),3,4,'LAB PG')
+# themap.createRuangan('plantai2',(0,6),3,4,'P.203')
+# themap.createRuangan('plantai2',(3,6),3,4,'P.202')
+# themap.createRuangan('plantai2',(6,6),2,4,'LAB STUDIO')
+# themap.createRuangan('plantai2',(8,6),2,4,'LAB MOBDEV')
+# # bagian tengah
+# themap.createRuangan('plantai2',(10,4),1,1,'') # tiang
+# themap.createRuangan('plantai2',(12,4),1,1,'') # tiang
+# themap.createRuangan('plantai2',(13,3),2,3,'MEJA')
+# themap.createRuangan('plantai2',(15,4),1,1,'') # tiang
+# themap.createRuangan('plantai2',(16,3),1,3,'MEJA')
+# themap.createRuangan('plantai2',(17,4),1,2,'LOKER')
+# themap.createRuangan('plantai2',(11,0),6,1,'TOILET')
+# themap.createRuangan('plantai2',(12,1),4,1,'LIFT')
+# themap.createRuangan('plantai2',(11,8),6,2,'TANGGA')
+# themap.createRuangan('plantai2',(10,9),1,1,'') # sambungan kiri tangga
+# themap.createRuangan('plantai2',(17,9),1,1,'') # sambungan kanan tangga
+# # bagian kanan
+# themap.createRuangan('plantai2',(18,0),5,2,'LAB JK')
+# themap.createRuangan('plantai2',(23,0),5,2,'LAB SC')
+# themap.createRuangan('plantai2',(18,8),7,2,'LAB MM')
+# themap.createRuangan('plantai2',(28,0),11,8,'PUSKOM P')
+# themap.createRuangan('plantai2',(27,8),12,2,'LAB PRODI T. MESIN')
+# themap.createRuangan('plantai2',(26,9),1,1,'') # tangga
+# themap.createRuangan('plantai2',(23,4),2,2,'LIFT')
+# themap.createRuangan('plantai2',(26,4),1,2,'MEJA')
+# # galon p lt 2
+# themap.createGalon('plantai2','plantai21',50,9,4)
+# themap.createGalon('plantai2','plantai22',75,27,7)
 
-# # themap.printAllLantai()
-# # themap.printLantai('plantai2')
-# # themap.printAllGalon()
+# # # themap.printAllLantai()
+# # # themap.printLantai('plantai2')
+# # # themap.printAllGalon()
 
-themap.findBestLoc()
-# themap.createPath()
-# print(themap.constructAPath())
-print(themap.getHeu())
+# themap.findBestLoc()
+# # themap.createPath()
+# # print(themap.constructAPath())
+# print(themap.getHeu())
