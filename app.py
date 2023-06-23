@@ -78,9 +78,9 @@ themap.createGalon('plantai2','plantai22',75,27,7)
 
 # P lantai 2
 themap.createLantai('wlantai1','W')
-themap.printAllLantai()
+# themap.printAllLantai()
 
-print(themap.daftarRuangan[1])
+# print(themap.daftarRuangan[1])
 
 # app run script
 app = Flask(__name__)
@@ -132,9 +132,8 @@ def receive_position():
     print('lantai', lantai)
 
     #findBestLocation algo
-    
     bestLoc = themap.findBestLoc()
-    print(bestLoc)
+    print("user", themap.user.x, themap.user.y)
     
     dataHasil = themap.constructAPath() #waktu convert path data aslinya keubah yg di themap.lantai error
     hasilPath = dataHasil[2]
