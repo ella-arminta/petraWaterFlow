@@ -2,9 +2,11 @@ import math
 
 class Location:
     def __init__(self, name, namaGalon, galon, x, y, User):
-        from algo.mapping import Map as mp
+        # from algo.mapping import Map as mp
+        from mapping import Map as mp
         mapp = mp()
-        self.getCountLantai = mapp.countLantai
+        self.countLantai = mapp.countLantai
+        self.countGedung = mapp.countGedung
 
         self.name = name #lantai
         self.galon = galon
@@ -18,20 +20,20 @@ class Location:
 
     def setCoordLantai(self):
         # beda gedung
-        if self.getCountLantai > 1:
-            self.x = self.x + 12
+        if self.countLantai > 1:
+            self.x = self.x + (12*self.countLantai-1)
             self.y = self.y
 
         # beda lantai
-        if self.getCountGedung > 1:
+        if self.countGedung > 1:
             self.x = self.x
-            self.y = self.y + 41
+            self.y = self.y + (41*self.countGedung-1)
 
-        return self.x, self.y
-        
+        return self.x
+          
     def calculate_distance(self):
-        x, y = self.setCoordLantai()
-        return math.sqrt(pow((x - self.start_x),2) + pow((y - self.start_y),2))
+        x = self.setCoordLantai()
+        return math.sqrt(pow((x - self.start_x),2) + pow((self.y - self.start_y),2))
 
     def calculate_util(self):
         distance_utility = 1 / (self.calculate_distance() + 1)
@@ -55,7 +57,7 @@ class Algo:
                 highest = locs.utility
                 best = locs
             
-        return best.namaGalon  
+        return best
     
 class User :
     def __init__(self,x, y):
