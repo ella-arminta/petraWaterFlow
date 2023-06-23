@@ -248,19 +248,6 @@ class Map():
             return self.arrHasil
 
 
-            # pathToFind = []
-            # # testing user dan galon
-            # # cek beda lantai gk
-            # print(self.lantai)
-            # flr = self.lantai[lantaiasal]
-            # flr2 = self.lantai[lantaitujuan]
-            # print(flr)
-            # print(flr2)
-            # for x in range(len(flr)):
-            #    for y in range(len(flr[0])):
-            #        if flr[x][y] > 1 :
-            #             flr[x][y] = 1
-
     # add Goal disini setelah user self-pick
     def constructAPath(self):
         newPath = self.createPath() #waktu create path keubah array aslinya error
@@ -350,7 +337,7 @@ class Map():
         data["y"] = y
         return data
 
-# # TestCase   
+# TestCase   
 # themap = Map()
 
 # themap.createLantai('plantai1','P')
@@ -424,5 +411,5 @@ class Map():
 
 # themap.findBestLoc()
 # # themap.createPath()
-# # print(themap.constructAPath())
-# print(themap.getHeu())
+# print(themap.constructAPath())
+# # print(themap.getHeu())

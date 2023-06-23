@@ -39,8 +39,10 @@ themap.createRuangan('plantai1',(26,0),9,2,'LAB T. INDUSTRI')
 themap.createRuangan('plantai1',(36,0),3,2,'TOILET')
 themap.createRuangan('plantai1',(35,3),2,1,'MEJA')
 # galon p lt 1
-themap.createGalon('plantai1','plantai11',90,17,2)
+themap.createGalon('plantai1','plantai11',80,17,2)
 themap.createGalon('plantai1','plantai12',80,27,7)
+themap.createGalon('plantai1','plantai12',80,7,7)
+themap.createGalon('plantai1','plantai12',80,37,7)
 themap.printLantai('plantai1')
 
 # P lantai 2
