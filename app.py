@@ -6,10 +6,6 @@ import asyncio
 
 # Peta Besar
 themap = mapping.Map()
-#Jalan ke galon dalam bentuk koordinat [0,2],[0,3]
-# themap.add_edge_petaUkp('plantai1','plantai2',5)
-# themap.add_edge_petaUkp('wlantai1','plantai1',10)
-
 # Peta per lantai
 # P lantai 1
 themap.createLantai('plantai1','P')
