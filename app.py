@@ -1,11 +1,14 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 import algo.mapping as mapping
+import pprint
+from flask import Flask
+import asyncio
 
+# Peta Besar
 themap = mapping.Map()
-# Peta Utama
-
+# Peta per lantai
 # P lantai 1
-themap.createLantai('plantai1')
+themap.createLantai('plantai1','P')
 # bagian kiri
 themap.createRuangan('plantai1',(0,0),7,5,'KANTIN')
 themap.createRuangan('plantai1',(8,0),2,3,'ATK')
@@ -24,7 +27,7 @@ themap.createRuangan('plantai1',(22,6),2,1,'MEJA')
 themap.createRuangan('plantai1',(25,6),2,1,'MEJA')
 themap.createRuangan('plantai1',(28,6),2,1,'MEJA')
 themap.createRuangan('plantai1',(18,8),7,2,'KURSI')
-themap.createRuangan('plantai1',(26,9),1,1,'') # tangga
+themap.createRuangan('plantai1',(26,9),1,1,'Tangga') # tangga
 themap.createRuangan('plantai1',(28,8),7,2,'LAB T. INDUSTRI')
 themap.createRuangan('plantai1',(35,8),2,2,'UPPK')
 themap.createRuangan('plantai1',(37,8),2,2,'KONSELING')
@@ -32,12 +35,14 @@ themap.createRuangan('plantai1',(26,0),9,2,'LAB T. INDUSTRI')
 themap.createRuangan('plantai1',(36,0),3,2,'TOILET')
 themap.createRuangan('plantai1',(35,3),2,1,'MEJA')
 # galon p lt 1
-themap.createGalon('plantai1','plantai11',90,17,2)
+themap.createGalon('plantai1','plantai11',80,17,2)
 themap.createGalon('plantai1','plantai12',80,27,7)
+themap.createGalon('plantai1','plantai12',80,7,7)
+themap.createGalon('plantai1','plantai12',80,37,7)
 themap.printLantai('plantai1')
 
 # P lantai 2
-themap.createLantai('plantai2')
+themap.createLantai('plantai2','P')
 # bagian kiri
 themap.createRuangan('plantai2',(0,0),3,4,'P.204')
 themap.createRuangan('plantai2',(3,0),4,4,'LAB SI')
@@ -148,24 +153,39 @@ themap.createGalon('wlantai1','wlantai11',95,32,4)
 themap.createGalon('wlantai1','wlantai11',80,32,7)
 themap.createGalon('wlantai1','wlantai11',65,24,8)
 
-
+themap.printAllLantai()
 
 print(themap.daftarRuangan[1])
+
 # app run script
 app = Flask(__name__)
+app.secret_key = 'secretKery'
+# hapus session
+# @app.before_request
+# def clear_session():
+#     if not request.path.startswith('/static'):
+#         session.pop('hasilPath', None)
 
 # app routes
 @app.route('/')
 def index():
-    return render_template('index.html',ruangans=themap.daftarRuangan,peta=themap.lantai,lantai='plantai1')
+    return render_template(
+        'index.html',
+        ruangans=themap.daftarRuangan,
+        peta=themap.lantai,
+        lantai='plantai1',
+        hasilPath=themap.getHasilJalanWeb(),
+        heu = themap.returnHeu()
+    )
 
 @app.route('/p2')
 def p2() :
-    return render_template('index.html',ruangans=themap.daftarRuangan,peta=themap.lantai,lantai='plantai2')
+    return render_template('index.html',ruangans=themap.daftarRuangan,peta=themap.lantai,lantai='plantai2',hasilPath=themap.getHasilJalanWeb(),heu = themap.returnHeu())
 
 # menerima posisi player
 @app.route('/send_position', methods=['POST'])
 def receive_position():
+    print("______ SEND POSITION ____ FIND BEST LOC")
     # ngambil x,y dan lantai dari web
     data = request.json
     x = data['x']
@@ -176,15 +196,32 @@ def receive_position():
     # lokasi user dari web
     print('posisi x',x)
     print('posisi y',y)
-    print('lantai', lantai)
+    print('lantai', themap.user.lantai)
 
     #findBestLocation algo
     bestLoc = themap.findBestLoc()
-    print(bestLoc)
+    print("user", themap.user.x, themap.user.y)
+    
+    dataHasil =  themap.constructAPath() #waktu convert path data aslinya keubah yg di themap.lantai error
+    print('Data hasil',dataHasil)
+    hasilPath = dataHasil[2]
+    print('hasilPath', hasilPath)
+    hasilPath =  themap.convertPathToWeb(hasilPath)
+    for i in hasilPath:
+        print('gedung ',i['gedung'])
+        print('lantai ',i['lantai'])
+        print('x ',i['x'])
+        print('y ',i['y'])
+
+    themap.setHasilJalanWeb(hasilPath)
+    heuris = themap.getHeu()
+    # print('heruis ',heuris)
+   # Await the completion of setHasilJalanWeb() before proceeding
+
 
     # Process the position data as needed
     msg = 'Position received successfully' + str(x) + ' y : '+ str(y) + ' lantai '+ lantai  
-    response = {'message': msg, 'bestLoc' : bestLoc}
+    response = {'message': msg, 'bestLoc' : bestLoc, 'hasilPath' : themap.getHasilJalanWeb(), 'heu' : heuris}
     return jsonify(response)
 
 if __name__ == '__main__':

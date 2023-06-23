@@ -1,6 +1,16 @@
 # import mapping as map
 import heapq
 
+data = {
+            # x, y, g, f, h
+    "heu": [],
+    # "g": [[], []],
+    # "f": [[], []],
+    # "h": [[], []],
+    "path": [[], []]
+}
+
+
 def calculate_heuristic(current, goal):
     # Manhattan heuristic
     return abs(current[0] - goal[0]) + abs(current[1] - goal[1])
@@ -37,7 +47,6 @@ def printPath(path):
 def a_star(maze):
     rows, cols = len(maze), len(maze[0])
     start, goal = None, None
-
     for i in range(rows):
         for j in range(cols):
             if maze[i][j] == 2:
@@ -59,10 +68,22 @@ def a_star(maze):
 
         if current == goal:
             path = getPath(came_from, goal)
-            printPath(path)
-            print('g : ',g_scores) # jarak dr skrg ke start
-            print('h: ',h_scores) # h itu jarak estimasi dr sekarang ke goal
-            print('f: ',f_scores)
+            # printPath(path)
+         
+            #append here
+            data["path"].append(path)
+ 
+            for i in range(len(g_scores)):
+                heur = [[],[],[],[],[]]
+                for j in range(len(g_scores[0])):
+                    g = str(g_scores[i][j])
+                    h = str(h_scores[i][j])
+                    f = str(f_scores[i][j])
+                
+                    heur = [j, i, g, h, f]
+                    # print(heur)
+                    data["heu"].append(heur)
+
             break
 
         neighbors = getNeighbors(current, maze)
@@ -75,3 +96,8 @@ def a_star(maze):
                 g_scores[neighbor[0]][neighbor[1]] = tentative_g_score
                 f_scores[neighbor[0]][neighbor[1]] = tentative_g_score + h_scores[neighbor[0]][neighbor[1]]
                 heapq.heappush(open_set, (f_scores[neighbor[0]][neighbor[1]], neighbor))
+
+
+    return data
+
+    

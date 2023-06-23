@@ -10,17 +10,20 @@
 {% block body %}
 <!-- untuk warna kotak -->
     {% for row in peta[lantai] %}
-    <div class="myrow">
-      {% for col in row %}
-        {% if col == 0 %}
-        <div class="mycol"></div>
-        {% elif col == -1 %}
-        <div class="mycol" style="color:#0062ff;display:flex;justify-content:center;align-items:center;"><i class="fa-solid fa-bottle-water fa-2xl fa-flip" style="--fa-animation-duration: 3s;"></i></div>
-        {% else %}
-        <div class="mycol" style="background-color: #ffff9dd9;"></div>
-        {% endif %}
-      {% endfor %}
-    </div>
+      {% set j = loop.index %}
+      <div class="myrow" id="myrow-{{ j-1 }}">
+        {% for col in row %}
+          {% set k = loop.index %}
+          {% if col == 0 %}
+          <div class="mycol" id="mycol-{{ k-1 }}" ></div>
+          {% elif col == -1 %}
+          <!-- set onclick here -->
+          <div class="mycol" id="mycol-{{ k-1 }}" style="color:#0062ff;display:flex;kustify-content:center;align-items:center;"><i class="fa-solid fa-bottle-water fa-2xl fa-flip" style="--fa-animation-duration: 3s;"></i></div>
+          {% else %}
+          <div class="mycol" id="mycol-{{ k-1 }}" style="background-color: #ffff9dd9;"></div>
+          {% endif %}
+        {% endfor %}
+      </div>
     {% endfor %}
 <!-- untuk nama ruangan -->
     {% for ruangan in ruangans %}
