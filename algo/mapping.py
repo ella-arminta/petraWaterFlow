@@ -1,6 +1,7 @@
 import algo.findBestLoc as fb # -> run app.py 
 # import findBestLoc as fb # -> run map.py 
 import algo.astar as ast
+import copy
 # import astar as ast
 
 
@@ -53,6 +54,7 @@ class Map():
 
         # object dr User
         self.user = User(14,0,'plantai1')
+        self.arrHasil = []
 
         # self.petaUkp = agl.Peta()
 
@@ -167,12 +169,12 @@ class Map():
     
         #convert to 0 1 for a*
     def convertPath(self,lantai):
-        flr = lantai
+        flr = lantai.copy()
+        self.printAllLantai()
         for x in range(len(flr)):
                 for y in range(len(flr[0])):
                     if flr[x][y] > 1 :
                         flr[x][y] = 1
-
         return flr
 
     def createPath(self):
@@ -180,7 +182,7 @@ class Map():
             # beda gedung tambahan 2 column
             # masukin semua gedung ke 1 array
 
-            arrHasil = []
+            self.arrHasil = []
             width = 39
             def addBottom(arraytujuan,array):
                 # tambaham 2 baris
@@ -208,18 +210,18 @@ class Map():
                             arraytujuan[i].append(1)
                 return arraytujuan
             
-            # print(self.gedung)
             for key,val in self.gedung.items():
                 temparr = []
                 for namalantai in val :
-                    temp2arr = self.convertPath(self.lantai[namalantai])
+                    temp2arr = []
+                    temp2arr = copy.deepcopy(self.lantai[namalantai]) #[:] buat bikin new object supaya self.lantai gk ikutan keganti
+                    temp2arr = self.convertPath(temp2arr)
                     temparr = addBottom(temparr, temp2arr)
-                if(len(arrHasil) == 0):
-                    arrHasil = addBottom(arrHasil,temparr)
+                if(len(self.arrHasil) == 0):
+                    self.arrHasil = addBottom(self.arrHasil,temparr)
                 else: 
-                    arrHasil = addRight(arrHasil,temparr)
+                    self.arrHasil = addRight(self.arrHasil,temparr)
                 temparr = []
-                
             x = self.user.x
             y = self.user.y
 
@@ -227,16 +229,16 @@ class Map():
             xGoal, yGoal= self.findBestLoc()
 
             #convert to index for a*
-            arrHasil[y][x] = 2
+            self.arrHasil[y][x] = 2
             print(xGoal, yGoal)
-            print(arrHasil[yGoal][xGoal])
-            arrHasil[yGoal][xGoal] = 3
+            print(self.arrHasil[yGoal][xGoal])
+            self.arrHasil[yGoal][xGoal] = 3
 
             # print(arrHasil)
             # for row in arrHasil:
             #     print(' '.join(map(str, row)))
 
-            return arrHasil
+            return self.arrHasil
 
 
             # pathToFind = []
@@ -254,7 +256,7 @@ class Map():
 
     # add Goal disini setelah user self-pick
     def constructAPath(self):
-        newPath = self.createPath()
+        newPath = self.createPath() #waktu create path keubah array aslinya error
         data = ast.a_star(newPath)
         # print (data["path"])
         return data["path"]
@@ -272,7 +274,8 @@ class Map():
     def convertPathToWeb(self,path):
         newPath = []
         for i in range(len(path)): 
-            x,y = path[i]
+            pathi = path[i]
+            x,y = pathi
             data = self.convertCoordinateToWeb((x,y))
             newPath.append(data)
         

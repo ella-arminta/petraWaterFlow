@@ -10,14 +10,16 @@
 {% block body %}
 <!-- untuk warna kotak -->
     {% for row in peta[lantai] %}
-      <div class="myrow" id="myrow-{{ loop.index-1 }}">
+      {% set j = loop.index %}
+      <div class="myrow" id="myrow-{{ j-1 }}">
         {% for col in row %}
+          {% set k = loop.index %}
           {% if col == 0 %}
-          <div class="mycol" id="mycol-{{ loop.index-1 }}" ></div>
+          <div class="mycol" id="mycol-{{ k }}" ></div>
           {% elif col == -1 %}
-          <div class="mycol" id="mycol-{{ loop.index-1 }}" style="color:#0062ff;display:flex;justify-content:center;align-items:center;"><i class="fa-solid fa-bottle-water fa-2xl fa-flip" style="--fa-animation-duration: 3s;"></i></div>
+          <div class="mycol" id="mycol-{{ k }}" style="color:#0062ff;display:flex;kustify-content:center;align-items:center;"><i class="fa-solid fa-bottle-water fa-2xl fa-flip" style="--fa-animation-duration: 3s;"></i></div>
           {% else %}
-          <div class="mycol" id="mycol-{{ loop.index-1 }}" style="background-color: #ffff9dd9;"></div>
+          <div class="mycol" id="mycol-{{ k }}" style="background-color: #ffff9dd9;"></div>
           {% endif %}
         {% endfor %}
       </div>
