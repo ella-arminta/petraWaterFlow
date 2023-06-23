@@ -172,7 +172,7 @@ class Map():
             
         galonTerbaik = findBest.choose_loc()
         print('best galon : ', galonTerbaik.namaGalon)
-        # await asyncio.sleep(1)
+
         return galonTerbaik.x, galonTerbaik.y
     
         #convert to 0 1 for a*
