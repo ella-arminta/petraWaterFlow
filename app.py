@@ -29,7 +29,7 @@ themap.createRuangan('plantai1',(22,6),2,1,'MEJA')
 themap.createRuangan('plantai1',(25,6),2,1,'MEJA')
 themap.createRuangan('plantai1',(28,6),2,1,'MEJA')
 themap.createRuangan('plantai1',(18,8),7,2,'KURSI')
-themap.createRuangan('plantai1',(26,9),1,1,'') # tangga
+themap.createRuangan('plantai1',(26,9),1,1,'Tangga') # tangga
 themap.createRuangan('plantai1',(28,8),7,2,'LAB T. INDUSTRI')
 themap.createRuangan('plantai1',(35,8),2,2,'UPPK')
 themap.createRuangan('plantai1',(37,8),2,2,'KONSELING')
@@ -78,14 +78,18 @@ themap.createGalon('plantai2','plantai22',75,27,7)
 
 # P lantai 2
 themap.createLantai('wlantai1','W')
-# themap.printAllLantai()
+themap.printAllLantai()
 
-# print(themap.daftarRuangan[1])
+print(themap.daftarRuangan[1])
 
 # app run script
 app = Flask(__name__)
 app.secret_key = 'secretKery'
-
+# hapus session
+# @app.before_request
+# def clear_session():
+#     if not request.path.startswith('/static'):
+#         session.pop('hasilPath', None)
 
 # app routes
 @app.route('/')
@@ -136,6 +140,7 @@ def receive_position():
     print("user", themap.user.x, themap.user.y)
     
     dataHasil = themap.constructAPath() #waktu convert path data aslinya keubah yg di themap.lantai error
+    print('Data hasil',dataHasil)
     hasilPath = dataHasil[2]
     print('hasilPath', hasilPath)
     hasilPath = themap.convertPathToWeb(hasilPath)
